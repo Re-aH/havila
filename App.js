@@ -1,8 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
-import Game from './components/game';
+import GameTitle from './components/gametitle';
 import { TouchableOpacity } from 'react-native';
 import { useState, useEffect } from 'react';
+import Item from './components/item';
+import { KeyboardAvoidingView } from 'react-native';
+import { Platform } from 'react-native';
 
 
 export default function App() {
@@ -26,8 +29,8 @@ export default function App() {
             <Text style={styles.sectionTitle}>חבילה עוברת</Text>
             <View style={styles.games}>
               {/* add games here */}
-              <Game title="משחק 1" />
-              <Game title="משחק 2" />
+              <GameTitle title="משחק 1" />
+              <GameTitle title="משחק 2" />
               {/* add new game button */}
 
               <View style={styles.addGame}>
@@ -38,6 +41,7 @@ export default function App() {
                   </View>
                 </TouchableOpacity>
               </View>
+
             </View>
           </View>
         </View>
@@ -47,21 +51,30 @@ export default function App() {
         //editing game screen - move to component
         <View style={styles.container}>
           <View style={styles.gamesWrapper}>
-            <TextInput style={styles.sectionTitle}>שם משחק</TextInput>
+            <View style={styles.topLine}>
+
+              <TextInput style={styles.sectionTitle} placeholder={'שם משחק'}></TextInput>
+              <TouchableOpacity>
+
+                <Text onPress={handlePressPlus} style={styles.home}>🏠</Text>
+              </TouchableOpacity>
+            </View>
             <View style={styles.games}>
               {/* add games here */}
-              <Game title="משחק 1" />
-              <Game title="משחק 2" />
+              <Item text="משחק 1" />
+              <Item text="משחק 2" />
               {/* add new game button */}
-
-              <View style={styles.addGame}>
-                <Text>משימה חדשה</Text>
-                <TouchableOpacity onPress={handlePressPlus}>
-                  <View>
-                    <Text style={styles.plus}>+</Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
+              <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}
+              >
+                <View style={styles.addGame}>
+                  <Text>משימה חדשה</Text>
+                  <TouchableOpacity >
+                    <View>
+                      <Text style={styles.plus}>+</Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              </KeyboardAvoidingView>
             </View>
           </View>
         </View>
@@ -84,7 +97,8 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 24,
-    fontWeight: "bold"
+    fontWeight: "bold",
+    width: "80%",
   },
   games: {},
   plus: {
@@ -105,5 +119,19 @@ const styles = StyleSheet.create({
     borderColor: "#C0C0C0",
     borderWidth: 1,
     marginTop: 20,
+  },
+  topLine: {
+    display: 'flex',
+    flexDirection: "row-reverse",
+    justifyContent: "space-between"
+
+  },
+  home: {
+    backgroundColor: '#fc3535',
+    borderRadius: 30,
+    fontSize: 18,
+    width: 30,
+    height: 30,
+    textAlign: 'center',
   }
 });
