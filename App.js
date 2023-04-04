@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { Keyboard, StyleSheet, Text, TextInput, View } from 'react-native';
 import GameTitle from './components/gametitle';
 import { TouchableOpacity } from 'react-native';
 import { useState, useEffect } from 'react';
@@ -10,6 +10,15 @@ import { Platform } from 'react-native';
 
 export default function App() {
   const [editing, setEditing] = useState(false)
+  const [item, setItem] = useState()
+  const [taskItems, setTaskItems] = useState([])
+
+
+  const hadleAddItem = () => {
+    Keyboard.dismiss();
+    setTaskItems([...taskItems, item]);
+    setItem(null);
+  }
 
   useEffect(() => {
     console.log(editing);
@@ -61,14 +70,22 @@ export default function App() {
             </View>
             <View style={styles.games}>
               {/* add games here */}
-              <Item text="משחק 1" />
-              <Item text="משחק 2" />
+
+              {
+                taskItems.map((item, index) => {
+                  return <Item key={index} text={item} />
+                })
+              }
+              {/* <Item text="משחק 1" />
+              <Item text="משחק 2" /> */}
               {/* add new game button */}
               <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}
               >
                 <View style={styles.addGame}>
-                  <Text>משימה חדשה</Text>
-                  <TouchableOpacity >
+                  <TextInput placeholder='משימה חדשה'
+                    value={item}
+                    onChangeText={text => setItem(text)} />
+                  <TouchableOpacity onPress={() => hadleAddItem()}>
                     <View>
                       <Text style={styles.plus}>+</Text>
                     </View>
