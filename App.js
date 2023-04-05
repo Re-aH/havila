@@ -1,33 +1,69 @@
 import { StatusBar } from 'expo-status-bar';
-import { Keyboard, StyleSheet, Text, TextInput, View } from 'react-native';
-import GameTitle from './components/gametitle';
-import { TouchableOpacity } from 'react-native';
+import { Keyboard, StyleSheet, Text, TextInput, View, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
 import { useState, useEffect } from 'react';
+import GameTitle from './components/gametitle';
 import Item from './components/item';
-import { KeyboardAvoidingView } from 'react-native';
-import { Platform } from 'react-native';
-
 
 export default function App() {
-  const [editing, setEditing] = useState(false)
-  const [item, setItem] = useState()
-  const [taskItems, setTaskItems] = useState([])
+  const [editing, setEditing] = useState(false);
+  const [item, setItem] = useState();
+  const [taskItems, setTaskItems] = useState([]);
+  const [games, setGames] = useState([]);
+  const [currentGame, setCurrentGame] = useState(null);
+  const [title, setTitle] = useState();
 
+  const handleGameTitleChange = (text) => {
+    setCurrentGame({
+      ...currentGame,
+      title: text
+    });
 
-  const hadleAddItem = () => {
+  };
+
+  const handleAddItem = () => {
     Keyboard.dismiss();
-    setTaskItems([...taskItems, item]);
+    setCurrentGame({
+      ...currentGame,
+      tasks: [...currentGame.tasks, item]
+    });
     setItem(null);
-  }
+  };
 
   useEffect(() => {
     console.log(editing);
   }, [editing]);
 
   const handlePressPlus = () => {
-    setEditing(!editing)
-    // console.log(editing);
-  }
+    setCurrentGame({
+      id: Date.now(),
+      title: "",
+      tasks: []
+    });
+    setEditing(true);
+  };
+
+  const handlePressHome = () => {
+    setCurrentGame(null);
+    setEditing(false);
+    setTitle("");
+    setTaskItems([]);
+  };
+
+  const handleSaveGame = () => {
+    if (currentGame.title) {
+      setGames([...games, currentGame]);
+      setCurrentGame(null);
+      setEditing(false);
+    }
+  };
+
+  const handlePressGame = (id) => {
+    const game = games.find((game) => game.id === id);
+    setCurrentGame(game);
+    setTitle(game.title);
+    setTaskItems(game.tasks);
+    setEditing(true);
+  };
 
   return (
     <>
@@ -37,10 +73,16 @@ export default function App() {
           <View style={styles.gamesWrapper}>
             <Text style={styles.sectionTitle}>חבילה עוברת</Text>
             <View style={styles.games}>
-              {/* add games here */}
-              <GameTitle title="משחק 1" />
-              <GameTitle title="משחק 2" />
-              {/* add new game button */}
+
+              {games.map((game) => (
+                <GameTitle
+                  key={game.id}
+                  id={game.id}
+                  title={game.title}
+                  onPress={() => handlePressGame(game.id)}
+                />
+              ))}
+
 
               <View style={styles.addGame}>
                 <Text>משחק חדש</Text>
@@ -57,45 +99,49 @@ export default function App() {
       )}
 
       {editing && (
-        //editing game screen - move to component
+        // editing game screen - move to component
         <View style={styles.container}>
           <View style={styles.gamesWrapper}>
             <View style={styles.topLine}>
-
-              <TextInput style={styles.sectionTitle} placeholder={'שם משחק'}></TextInput>
-              <TouchableOpacity>
-
-                <Text onPress={handlePressPlus} style={styles.home}>🏠</Text>
+              <TextInput
+                style={styles.sectionTitle}
+                placeholder={'שם משחק'}
+                value={currentGame.title}
+                onChangeText={handleGameTitleChange}
+              />
+              <TouchableOpacity onPress={handlePressHome}>
+                <Text style={styles.home}>🏠</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.games}>
-              {/* add games here */}
-
-              {
-                taskItems.map((item, index) => {
-                  return <Item key={index} text={item} />
-                })
-              }
-              {/* <Item text="משחק 1" />
-              <Item text="משחק 2" /> */}
-              {/* add new game button */}
-              <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}
-              >
+              {/* add task items here */}
+              {currentGame.tasks.map((task, index) => (
+                <Item key={index} text={task} />
+              ))}
+              <KeyboardAvoidingView
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
                 <View style={styles.addGame}>
-                  <TextInput placeholder='משימה חדשה'
+                  <TextInput
+                    placeholder="משימה חדשה"
                     value={item}
-                    onChangeText={text => setItem(text)} />
-                  <TouchableOpacity onPress={() => hadleAddItem()}>
+                    onChangeText={text => setItem(text)}
+                  />
+                  <TouchableOpacity onPress={handleAddItem}>
                     <View>
                       <Text style={styles.plus}>+</Text>
                     </View>
                   </TouchableOpacity>
                 </View>
               </KeyboardAvoidingView>
+              {/* add save game button */}
+              <TouchableOpacity onPress={handleSaveGame}>
+                <View style={styles.addGame}>
+                  <Text>שמור משחק</Text>
+                </View>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
-
       )}
       <StatusBar style="auto" />
     </>
