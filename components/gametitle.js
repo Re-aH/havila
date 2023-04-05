@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 export default function GameTitle(props) {
     return (
         <View style={styles.game}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => props.onPress(props.id)}>
 
                 <Text style={styles.gameText}>
                     {props.title}
