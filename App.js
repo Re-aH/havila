@@ -23,15 +23,29 @@ export default function App() {
 
     //find the index of the game with this id
     let index = games.findIndex(g => g.id === currentGame.id)
-    console.log(index);
+    // console.log(index);
 
     //replaces this game in games array
     let newGames = [...games];
     newGames.splice(index, 1, currentGame);
-    console.log(newGames);
+    // console.log(newGames);
     setGames(newGames);
 
   };
+
+  const handleChangeItemText = (text, index) => {
+    // Keyboard.dismiss();
+    // console.log('text is changing');
+    // console.log(index, text);
+    if (currentGame) {
+
+      let newTasks = currentGame.tasks;
+      // let newTasks = ['a', 'b', 'c'];
+      newTasks[index] = text;
+      setCurrentGame({ ...currentGame, tasks: newTasks });
+      // console.log(newTasks, currentGame);
+    }
+  }
 
 
 
@@ -46,7 +60,7 @@ export default function App() {
   };
 
   useEffect(() => {
-    console.log(currentGame, games);
+    // { currentGame ? console.log(currentGame.tasks) : console.log('currentGame is NULL'); }
 
 
   }, [editing, games, currentGame,]);
@@ -63,12 +77,12 @@ export default function App() {
   const handlePressHome = () => {
     //find the index of the game with this id
     let index = games.findIndex(g => g.id === currentGame.id)
-    console.log(index);
+    // console.log(index);
 
     //replaces this game in games array
     let newGames = [...games];
     newGames.splice(index, 1, currentGame);
-    console.log(newGames);
+    // console.log(newGames);
     setGames(newGames);
 
     setCurrentGame(null);
@@ -77,15 +91,6 @@ export default function App() {
     setTaskItems([]);
   };
 
-
-  //to be deleted
-  const handleSaveGame = () => {
-    if (currentGame.title) {
-      setGames([...games, currentGame]);
-      setCurrentGame(null);
-      setEditing(false);
-    }
-  };
 
   const handlePressGame = (id) => {
     const game = games.find((game) => game.id === id);
@@ -147,7 +152,7 @@ export default function App() {
             <View style={styles.games}>
               {/* add task items here */}
               {currentGame.tasks.map((task, index) => (
-                <Item key={index} text={task} />
+                <Item key={index} text={task} index={index} onChangeText={handleChangeItemText} />
               ))}
               <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -164,12 +169,7 @@ export default function App() {
                   </TouchableOpacity>
                 </View>
               </KeyboardAvoidingView>
-              {/* add save game button */}
-              <TouchableOpacity onPress={handleSaveGame}>
-                <View style={styles.addGame}>
-                  <Text>שמור משחק</Text>
-                </View>
-              </TouchableOpacity>
+
             </View>
           </View>
         </View>
