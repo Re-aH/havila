@@ -1,16 +1,17 @@
-import { TouchableOpacity } from 'react-native';
+import { useState } from 'react';
+import { TextInput, TouchableOpacity } from 'react-native';
 import { StyleSheet, Text, View } from 'react-native';
 
 export default function Item(props) {
+
+
+
+
     return (
         <View style={styles.game}>
-            <TouchableOpacity>
-
-                <Text style={styles.gameText}>
-                    {props.text}
-                </Text>
+            <TouchableOpacity >
+                <TextInput style={styles.gameText}>{props.text}</TextInput>
             </TouchableOpacity>
-
         </View>
     );
 }
