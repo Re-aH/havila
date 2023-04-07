@@ -8,7 +8,8 @@ export default function App() {
   const [editing, setEditing] = useState(false);
   const [item, setItem] = useState();
   const [taskItems, setTaskItems] = useState([]);
-  const [games, setGames] = useState([]);
+  //temporary game list
+  const [games, setGames] = useState([{ "id": 1680865464903, "tasks": ["t1", "t2"], "title": "g1" }, { "id": 1680865487384, "tasks": ["t11", "t22"], "title": "g2" }]);
   const [currentGame, setCurrentGame] = useState(null);
   const [title, setTitle] = useState();
 
@@ -17,8 +18,23 @@ export default function App() {
       ...currentGame,
       title: text
     });
+    //delets the currentGame from games
+    // setGames(games.filter(g => g.id !== currentGame.id))
+
+    //find the index of the game with this id
+    let index = games.findIndex(g => g.id === currentGame.id)
+    console.log(index);
+
+    //replaces this game in games array
+    let newGames = [...games];
+    newGames.splice(index, 1, currentGame);
+    console.log(newGames);
+    setGames(newGames);
 
   };
+
+
+
 
   const handleAddItem = () => {
     Keyboard.dismiss();
@@ -30,8 +46,10 @@ export default function App() {
   };
 
   useEffect(() => {
-    console.log(editing);
-  }, [editing]);
+    console.log(currentGame, games);
+
+
+  }, [editing, games, currentGame,]);
 
   const handlePressPlus = () => {
     setCurrentGame({
@@ -43,12 +61,24 @@ export default function App() {
   };
 
   const handlePressHome = () => {
+    //find the index of the game with this id
+    let index = games.findIndex(g => g.id === currentGame.id)
+    console.log(index);
+
+    //replaces this game in games array
+    let newGames = [...games];
+    newGames.splice(index, 1, currentGame);
+    console.log(newGames);
+    setGames(newGames);
+
     setCurrentGame(null);
     setEditing(false);
     setTitle("");
     setTaskItems([]);
   };
 
+
+  //to be deleted
   const handleSaveGame = () => {
     if (currentGame.title) {
       setGames([...games, currentGame]);
@@ -63,6 +93,7 @@ export default function App() {
     setTitle(game.title);
     setTaskItems(game.tasks);
     setEditing(true);
+    // console.log(currentGame);
   };
 
   return (
@@ -162,6 +193,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     width: "80%",
+    alignSelf: "flex-end",
   },
   games: {},
   plus: {
