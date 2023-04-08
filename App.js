@@ -13,13 +13,24 @@ export default function App() {
   const [currentGame, setCurrentGame] = useState(null);
   const [title, setTitle] = useState();
 
+
+
+  const handleDeleteItem = (index) => {
+    // console.log(index);
+    if (currentGame) {
+
+      let newTasks = currentGame.tasks;
+      newTasks = newTasks.filter((item, i) => i !== index)
+      setCurrentGame({ ...currentGame, tasks: newTasks });
+      // console.log(newTasks, currentGame, index);
+    }
+  };
+
   const handleGameTitleChange = (text) => {
     setCurrentGame({
       ...currentGame,
       title: text
     });
-    //delets the currentGame from games
-    // setGames(games.filter(g => g.id !== currentGame.id))
 
     //find the index of the game with this id
     let index = games.findIndex(g => g.id === currentGame.id)
@@ -33,6 +44,21 @@ export default function App() {
 
   };
 
+  const handleDeleteGame = (id) => {
+    //delets the currentGame from games
+
+    // console.log(id);
+    if (games) {
+
+      let newGames = games;
+      newGames = newGames.filter((g) => g.id !== id)
+      setGames(newGames)
+      // console.log(newGames);
+    }
+
+
+  }
+
   const handleChangeItemText = (text, index) => {
     // Keyboard.dismiss();
     // console.log('text is changing');
@@ -40,7 +66,6 @@ export default function App() {
     if (currentGame) {
 
       let newTasks = currentGame.tasks;
-      // let newTasks = ['a', 'b', 'c'];
       newTasks[index] = text;
       setCurrentGame({ ...currentGame, tasks: newTasks });
       // console.log(newTasks, currentGame);
@@ -116,6 +141,7 @@ export default function App() {
                   id={game.id}
                   title={game.title}
                   onPress={() => handlePressGame(game.id)}
+                  onDelete={handleDeleteGame}
                 />
               ))}
 
@@ -152,7 +178,8 @@ export default function App() {
             <View style={styles.games}>
               {/* add task items here */}
               {currentGame.tasks.map((task, index) => (
-                <Item key={index} text={task} index={index} onChangeText={handleChangeItemText} />
+                <Item key={index} text={task} index={index} onChangeText={handleChangeItemText}
+                  onDelete={handleDeleteItem} />
               ))}
               <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
