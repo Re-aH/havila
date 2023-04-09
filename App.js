@@ -1,8 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
-import { Keyboard, StyleSheet, Text, TextInput, View, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
-import { useState, useEffect } from 'react';
+import { Keyboard, StyleSheet, Text, TextInput, View, KeyboardAvoidingView, Platform, TouchableOpacity, ScrollView } from 'react-native';
+import { useState, useEffect, } from 'react';
 import GameTitle from './components/gametitle';
 import Item from './components/item';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function App() {
   const [editing, setEditing] = useState(false);
@@ -13,7 +15,30 @@ export default function App() {
   const [currentGame, setCurrentGame] = useState(null);
   const [title, setTitle] = useState();
 
+  //Load games from local storage (if exists)
+  useEffect(() => {
+    const loadGames = async () => {
+      try {
+        const savedGames = await AsyncStorage.getItem('localGames');
+        if (savedGames !== null) {
+          setGames(JSON.parse(savedGames));
+        }
+      } catch (error) {
+        console.log('no saved games', error);
+      }
+    };
+    loadGames();
 
+  }, []);
+
+  // Save the games array to local storage
+  const saveGamesToStorage = async (games) => {
+    try {
+      await AsyncStorage.setItem('localGames', JSON.stringify(games));
+    } catch (error) {
+      console.log('Error saving games to local storage:', error);
+    }
+  };
 
   const handleDeleteItem = (index) => {
     // console.log(index);
@@ -41,6 +66,7 @@ export default function App() {
     newGames.splice(index, 1, currentGame);
     // console.log(newGames);
     setGames(newGames);
+    saveGamesToStorage(games);
 
   };
 
@@ -54,6 +80,7 @@ export default function App() {
       newGames = newGames.filter((g) => g.id !== id)
       setGames(newGames)
       // console.log(newGames);
+      saveGamesToStorage(games);
     }
 
 
@@ -86,16 +113,21 @@ export default function App() {
 
   useEffect(() => {
     // { currentGame ? console.log(currentGame.tasks) : console.log('currentGame is NULL'); }
+    console.log(games);
 
 
   }, [editing, games, currentGame,]);
 
-  const handlePressPlus = () => {
-    setCurrentGame({
+  const handleAddGame = () => {
+    const newGame = {
       id: Date.now(),
       title: "",
       tasks: []
-    });
+    }
+
+    setCurrentGame(newGame);
+    setGames([...games, newGame])
+    saveGamesToStorage(games);
     setEditing(true);
   };
 
@@ -109,7 +141,7 @@ export default function App() {
     newGames.splice(index, 1, currentGame);
     // console.log(newGames);
     setGames(newGames);
-
+    saveGamesToStorage(games);
     setCurrentGame(null);
     setEditing(false);
     setTitle("");
@@ -130,7 +162,7 @@ export default function App() {
     <>
       {!editing && (
         //Home screen - move to component?
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
           <View style={styles.gamesWrapper}>
             <Text style={styles.sectionTitle}>חבילה עוברת</Text>
             <View style={styles.games}>
@@ -148,8 +180,8 @@ export default function App() {
 
               <View style={styles.addGame}>
                 <Text>משחק חדש</Text>
-                <TouchableOpacity onPress={handlePressPlus}>
-                  <View>
+                <TouchableOpacity onPress={handleAddGame}>
+                  <View sytle={styles.plusWrapper}>
                     <Text style={styles.plus}>+</Text>
                   </View>
                 </TouchableOpacity>
@@ -157,12 +189,12 @@ export default function App() {
 
             </View>
           </View>
-        </View>
+        </ScrollView>
       )}
 
       {editing && (
         // editing game screen - move to component
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
           <View style={styles.gamesWrapper}>
             <View style={styles.topLine}>
               <TextInput
@@ -196,10 +228,15 @@ export default function App() {
                   </TouchableOpacity>
                 </View>
               </KeyboardAvoidingView>
-
+              <TouchableOpacity style={styles.playButton}>
+                <View style={styles.playButtonText}>
+                  <Text style={styles.playButtonTextBox}>התחל</Text>
+                  <Text style={styles.playButtonTextBox}>משחק</Text>
+                </View>
+              </TouchableOpacity>
             </View>
           </View>
-        </View>
+        </ScrollView>
       )}
       <StatusBar style="auto" />
     </>
@@ -223,14 +260,16 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
   },
   games: {},
+
   plus: {
     backgroundColor: '#fc3535',
     color: 'white',
-    borderRadius: 24,
+    borderRadius: 14,
     fontSize: 18,
     width: 24,
     height: 24,
-    textAlign: 'center'
+    textAlign: 'center',
+    overflow: 'hidden',
   },
   addGame: {
     flexDirection: 'row-reverse',
@@ -250,10 +289,37 @@ const styles = StyleSheet.create({
   },
   home: {
     backgroundColor: '#fc3535',
-    borderRadius: 30,
+    borderRadius: 15,
     fontSize: 18,
     width: 30,
     height: 30,
     textAlign: 'center',
-  }
+    overflow: 'hidden',
+  },
+  playButton: {
+    display: 'flex',
+    alignSelf: 'center',
+    alignItems: 'center',
+    backgroundColor: '#c50000',
+    borderRadius: 40,
+    width: 80,
+    height: 80,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: "#C0C0C0",
+    marginTop: 50,
+
+
+
+
+  },
+
+  playButtonText: {
+    paddingTop: 14,
+  },
+
+  playButtonTextBox: {
+    fontSize: 20,
+    color: 'white',
+  },
+
 });
