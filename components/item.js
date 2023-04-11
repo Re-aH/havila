@@ -13,7 +13,9 @@ export default function Item(props) {
                     <TextInput
                         style={styles.gameText}
                         value={props.text}
-                        onChangeText={(text) => props.onChangeText(text, props.index)}></TextInput>
+                        onChangeText={(text) => props.onChangeText(text, props.index)}
+                        multiline={true}
+                        returnKeyType='done'></TextInput>
                 </TouchableOpacity>
             </View>
             <View >
