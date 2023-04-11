@@ -1,9 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import { Keyboard, StyleSheet, Text, TextInput, View, KeyboardAvoidingView, Platform, TouchableOpacity, ScrollView } from 'react-native';
 import { useState, useEffect, } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import GameTitle from './components/gametitle';
 import Item from './components/item';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import WaitScreen from './components/waitScreen';
 
 
 export default function App() {
@@ -14,6 +15,7 @@ export default function App() {
   const [games, setGames] = useState([{ "id": 1680865464903, "tasks": ["t1", "t2"], "title": "g1" }, { "id": 1680865487384, "tasks": ["t11", "t22"], "title": "g2" }]);
   const [currentGame, setCurrentGame] = useState(null);
   const [title, setTitle] = useState();
+  const [gameOn, setGameOn] = useState(false)
 
   //Load games from local storage (if exists)
   useEffect(() => {
@@ -113,7 +115,7 @@ export default function App() {
 
   useEffect(() => {
     // { currentGame ? console.log(currentGame.tasks) : console.log('currentGame is NULL'); }
-    console.log(games);
+    // console.log(games);
 
 
   }, [editing, games, currentGame,]);
@@ -146,6 +148,9 @@ export default function App() {
     setEditing(false);
     setTitle("");
     setTaskItems([]);
+    setGameOn(false);
+    setTurnCount(0);
+    setPassing(false);
   };
 
 
@@ -158,9 +163,34 @@ export default function App() {
     // console.log(currentGame);
   };
 
+  const handleGameOn = () => {
+    //find the index of the game with this id
+    let index = games.findIndex(g => g.id === currentGame.id)
+    // console.log(index);
+
+    //replaces this game in games array
+    let newGames = [...games];
+    newGames.splice(index, 1, currentGame);
+    // console.log(newGames);
+    setGames(newGames);
+    saveGamesToStorage(games);
+    setEditing(false);
+    setGameOn(true)
+  };
+
+  const [passing, setPassing] = useState(false)
+
+  const [turnCount, setTurnCount] = useState(0)
+
+  const handleStartPlaying = () => {
+    setPassing(!passing)
+    setTurnCount((prevTurnCount) => prevTurnCount + 1)
+  }
+
+
   return (
     <>
-      {!editing && (
+      {!editing && !gameOn && (
         //Home screen - move to component?
         <ScrollView style={styles.container}>
           <View style={styles.gamesWrapper}>
@@ -192,7 +222,7 @@ export default function App() {
         </ScrollView>
       )}
 
-      {editing && (
+      {editing && !gameOn && (
         // editing game screen - move to component
         <ScrollView style={styles.container}>
           <View style={styles.gamesWrapper}>
@@ -220,6 +250,8 @@ export default function App() {
                     placeholder="משימה חדשה"
                     value={item}
                     onChangeText={text => setItem(text)}
+                    multiline={true}
+                    returnKeyType='done'
                   />
                   <TouchableOpacity onPress={handleAddItem}>
                     <View>
@@ -228,7 +260,7 @@ export default function App() {
                   </TouchableOpacity>
                 </View>
               </KeyboardAvoidingView>
-              <TouchableOpacity style={styles.playButton}>
+              <TouchableOpacity style={styles.playButton} onPress={handleGameOn}>
                 <View style={styles.playButtonText}>
                   <Text style={styles.playButtonTextBox}>התחל</Text>
                   <Text style={styles.playButtonTextBox}>משחק</Text>
@@ -238,6 +270,44 @@ export default function App() {
           </View>
         </ScrollView>
       )}
+      {gameOn && (
+        <View style={styles.container2}>
+          <View style={styles.gamesWrapper}>
+            <View style={styles.topLine2}>
+              <TouchableOpacity onPress={handlePressHome}>
+                <Text style={styles.home2}>🏠</Text>
+              </TouchableOpacity>
+            </View>
+
+            {!passing && (turnCount === 0) && (
+              <>
+                <Text style={styles.GameText}>המשחק:</Text>
+                <Text style={styles.GameText}>{currentGame.title}</Text>
+                <Text style={styles.GameText}>מוכן</Text>
+                <TouchableOpacity style={styles.playButton2} onPress={handleStartPlaying}>
+                  <View style={styles.playButtonText}>
+                    <Text style={styles.playButtonTextBox}>התחל</Text>
+                    <Text style={styles.playButtonTextBox}>משחק</Text>
+                  </View>
+                </TouchableOpacity>
+              </>
+            )}
+
+            {passing && (turnCount > 0) && (
+
+
+              <WaitScreen tasks={currentGame.tasks} />
+
+
+            )}
+          </View>
+        </View >
+
+
+
+
+      )
+      }
       <StatusBar style="auto" />
     </>
   );
@@ -264,7 +334,7 @@ const styles = StyleSheet.create({
   plus: {
     backgroundColor: '#fc3535',
     color: 'white',
-    borderRadius: 14,
+    borderRadius: 12,
     fontSize: 18,
     width: 24,
     height: 24,
@@ -296,6 +366,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     overflow: 'hidden',
   },
+
   playButton: {
     display: 'flex',
     alignSelf: 'center',
@@ -307,10 +378,6 @@ const styles = StyleSheet.create({
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: "#C0C0C0",
     marginTop: 50,
-
-
-
-
   },
 
   playButtonText: {
@@ -321,5 +388,52 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: 'white',
   },
+
+  container2: {
+    flex: 1,
+    backgroundColor: '#fffdef',
+    justifyContent: 'space-between',
+    // rowGap: 20,
+
+  },
+  topLine2: {
+    display: 'flex',
+    flexDirection: "row",
+    justifyContent: 'flex-start',
+    paddingBottom: 80,
+
+
+  },
+  home2: {
+    backgroundColor: '#fc3535',
+    borderRadius: 15,
+    fontSize: 18,
+    width: 30,
+    height: 30,
+    textAlign: 'center',
+    overflow: 'hidden',
+
+  },
+
+  GameText: {
+    fontSize: 30,
+    padding: 10,
+    textAlign: 'center'
+
+  },
+
+  playButton2: {
+    display: 'flex',
+    alignSelf: 'center',
+    alignItems: 'center',
+    backgroundColor: '#c50000',
+    borderRadius: 40,
+    width: 80,
+    height: 80,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: "#C0C0C0",
+    marginTop: 120,
+  },
+
 
 });
