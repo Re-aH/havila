@@ -9,12 +9,13 @@ export default function WaitScreen(props) {
     let starterT = 5
     const [timeLeft, setTimeLeft] = useState(starterT);
     const [indexToDisplay, setIndextoDisplay] = useState(0)
+    const [dispFinalScreen, setDispFinalScreen] = useState(false)
 
     useEffect(() => {
         if (!timeLeft) return;
         // display task 
         const timer = setTimeout(() => {
-            setTimeLeft(timeLeft - 1);
+            setTimeLeft((timeLeft) => timeLeft - 1);
         }, 1000);
         return () => clearTimeout(timer);
     }, [timeLeft]);
@@ -28,15 +29,23 @@ export default function WaitScreen(props) {
     };
 
     const handleCont = () => {
-        if (indexToDisplay !== props.tasks.length) {
+        if (indexToDisplay !== props.tasks.length - 1) {
             setTimeLeft(starterT)
-            setIndextoDisplay(indexToDisplay + 1)
+            setIndextoDisplay((indexToDisplay) => indexToDisplay + 1)
         }
         else {
             // display final screen
+            setTimeLeft(starterT)
+            setDispFinalScreen(true)
+
 
         }
     };
+
+    const handleEnd = () => {
+        setDispFinalScreen(false)
+        props.home()
+    }
 
     return (
         <View>
@@ -49,7 +58,7 @@ export default function WaitScreen(props) {
                 </View>
             </>)
             }
-            {(timeLeft === 0) && (<>
+            {(timeLeft === 0) && (!dispFinalScreen) && (<>
                 <View style={styles.container3}>
                     <Text multiline={true} style={styles.task}>{props.tasks[indexToDisplay]}</Text>
                     <View style={styles.line2}>
@@ -62,6 +71,17 @@ export default function WaitScreen(props) {
                     </View>
                     <TouchableOpacity onPress={handleCont}>
                         <Text style={styles.cont}>המשך</Text>
+                    </TouchableOpacity>
+                </View>
+            </>)}
+            {(timeLeft === 0) && (dispFinalScreen) && (<>
+                <View style={styles.container3}>
+                    <Text multiline={true} style={styles.task}>כל הכבוד, ניצחתם!!!</Text>
+                    <View style={styles.line2}>
+                        {/* add picture or animation */}
+                    </View>
+                    <TouchableOpacity onPress={handleEnd}>
+                        <Text style={styles.cont}>סיום</Text>
                     </TouchableOpacity>
                 </View>
             </>)}
