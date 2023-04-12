@@ -21,11 +21,17 @@ export default function WaitScreen(props) {
     }, [timeLeft]);
 
     const handleNext = () => {
-
+        if (indexToDisplay < props.tasks.length - 1) {
+            setIndextoDisplay((indexToDisplay) => indexToDisplay + 1)
+        } else {
+            setDispFinalScreen(true)
+        }
     };
 
     const handlePrev = () => {
-
+        if (indexToDisplay > 0) {
+            setIndextoDisplay((indexToDisplay) => indexToDisplay - 1)
+        }
     };
 
     const handleCont = () => {
