@@ -296,7 +296,7 @@ export default function App() {
             {passing && (turnCount > 0) && (
 
 
-              <WaitScreen tasks={currentGame.tasks} />
+              <WaitScreen tasks={currentGame.tasks} home={() => handlePressHome()} />
 
 
             )}
