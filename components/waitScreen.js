@@ -2,18 +2,56 @@
 
 import { TouchableOpacity, StyleSheet, View, Text } from 'react-native';
 import { useState, useEffect } from 'react';
+import { Audio } from 'expo-av'
+
 
 
 export default function WaitScreen(props) {
     //to be later passed in as props
-    let starterT = 5
-    const [timeLeft, setTimeLeft] = useState(starterT);
-    const [indexToDisplay, setIndextoDisplay] = useState(0)
-    const [dispFinalScreen, setDispFinalScreen] = useState(false)
+    let starterT = 7
+    const [indexToDisplay, setIndextoDisplay] = useState(0);
+    const [dispFinalScreen, setDispFinalScreen] = useState(false);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [randomNumber, setRandomNumber] = useState(Math.floor(Math.random() * 11));
+    const [timeLeft, setTimeLeft] = useState(starterT + randomNumber);
+
 
     useEffect(() => {
-        if (!timeLeft) return;
+        let soundObject = new Audio.Sound();
+
+        const playSound = async () => {
+            try {
+                await soundObject.loadAsync(require('./partyGroove.mp3'));
+                // await soundObject.setIsLoopingAsync(true);
+                await soundObject.playAsync();
+                setIsPlaying(true);
+            } catch (error) {
+                // console.log('Error playing sound', error);
+                console.log('music has ended');
+            }
+        };
+
+        if (isPlaying) {
+            playSound();
+        } else {
+            soundObject.stopAsync();
+        }
+
+        return () => {
+            if (soundObject) {
+                soundObject.unloadAsync();
+            }
+        };
+    }, [isPlaying]);
+
+
+    useEffect(() => {
+        if (!timeLeft) {
+            setIsPlaying(false);
+            return;
+        }
         // display task 
+        setIsPlaying(true);
         const timer = setTimeout(() => {
             setTimeLeft((timeLeft) => timeLeft - 1);
         }, 1000);
@@ -35,15 +73,18 @@ export default function WaitScreen(props) {
     };
 
     const handleCont = () => {
+        setRandomNumber(Math.floor(Math.random() * 9))
+        setTimeLeft(starterT + randomNumber)
+        // console.log(timeLeft);
         if (indexToDisplay !== props.tasks.length - 1) {
-            setTimeLeft(starterT)
+
             setIndextoDisplay((indexToDisplay) => indexToDisplay + 1)
+
         }
         else {
             // display final screen
-            setTimeLeft(starterT)
-            setDispFinalScreen(true)
 
+            setDispFinalScreen(true)
 
         }
     };
@@ -65,6 +106,7 @@ export default function WaitScreen(props) {
             </>)
             }
             {(timeLeft === 0) && (!dispFinalScreen) && (<>
+                {/* <SwipeEraser></SwipeEraser> */}
                 <View style={styles.container3}>
                     <Text multiline={true} style={styles.task}>{props.tasks[indexToDisplay]}</Text>
                     <View style={styles.line2}>
