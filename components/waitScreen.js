@@ -3,6 +3,7 @@
 import { TouchableOpacity, StyleSheet, View, Text } from 'react-native';
 import { useState, useEffect } from 'react';
 import { Audio } from 'expo-av'
+import GiftIcon from './presanimation';
 
 
 
@@ -21,7 +22,7 @@ export default function WaitScreen(props) {
 
         const playSound = async () => {
             try {
-                await soundObject.loadAsync(require('./partyGroove.mp3'));
+                await soundObject.loadAsync(require('../assets/partyGroove.mp3'));
                 // await soundObject.setIsLoopingAsync(true);
                 await soundObject.playAsync();
                 setIsPlaying(true);
@@ -99,7 +100,7 @@ export default function WaitScreen(props) {
             {(timeLeft > 0) && (<>
                 <View style={styles.container4} >
                     <Text style={styles.pass}>העבירו את החבילה</Text>
-                    {/* add sound */}
+                    <GiftIcon></GiftIcon>
                     {/* add animation */}
                     <Text style={styles.num}>{timeLeft}</Text>
                 </View>
