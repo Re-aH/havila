@@ -282,7 +282,7 @@ export default function App() {
             {!passing && (turnCount === 0) && (
               <>
                 <Text style={styles.GameText}>המשחק:</Text>
-                <Text style={styles.GameText}>{currentGame.title}</Text>
+                <Text style={styles.GameText}>"{currentGame.title}"</Text>
                 <Text style={styles.GameText}>מוכן</Text>
                 <TouchableOpacity style={styles.playButton2} onPress={handleStartPlaying}>
                   <View style={styles.playButtonText}>
