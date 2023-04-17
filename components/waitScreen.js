@@ -1,9 +1,11 @@
 
 
-import { TouchableOpacity, StyleSheet, View, Text } from 'react-native';
+import { TouchableOpacity, StyleSheet, View, Text, Image } from 'react-native';
 import { useState, useEffect } from 'react';
 import { Audio } from 'expo-av'
 import GiftIcon from './presanimation';
+import openGift from '../assets/opengift.png'
+import ConfettiCannon from 'react-native-confetti-cannon';
 
 
 
@@ -102,7 +104,7 @@ export default function WaitScreen(props) {
                     <Text style={styles.pass}>העבירו את החבילה</Text>
                     <GiftIcon></GiftIcon>
                     {/* add animation */}
-                    <Text style={styles.num}>{timeLeft}</Text>
+                    {/* <Text style={styles.num}>{timeLeft}</Text> */}
                 </View>
             </>)
             }
@@ -126,13 +128,13 @@ export default function WaitScreen(props) {
             {(timeLeft === 0) && (dispFinalScreen) && (<>
                 <View style={styles.container3}>
                     <Text multiline={true} style={styles.task}>כל הכבוד, ניצחתם!!!</Text>
-                    <View style={styles.line2}>
-                        {/* add picture or animation */}
-                    </View>
+                    <Image source={openGift} style={styles.gift} />
+
                     <TouchableOpacity onPress={handleEnd}>
                         <Text style={styles.cont}>סיום</Text>
                     </TouchableOpacity>
                 </View>
+                <ConfettiCannon count={300} origin={{ x: 100, y: -200 }} explosionSpeed={200} fallSpeed={6000} />
             </>)}
         </View>
     );
@@ -203,6 +205,15 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         alignSelf: 'center',
         // flex: 1,
+    },
+    gift: {
+
+        marginTop: 20,
+        marginBottom: 20,
+        alignSelf: 'center',
+        width: '60%',
+        height: '60%',
+        resizeMode: 'contain',
     },
 
 });
