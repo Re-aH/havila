@@ -12,10 +12,11 @@ export default function App() {
   const [item, setItem] = useState();
   const [taskItems, setTaskItems] = useState([]);
   //temporary game list
-  const [games, setGames] = useState([{ "id": 1680865464903, "tasks": ["t1", "t2"], "title": "g1" }, { "id": 1680865487384, "tasks": ["t11", "t22"], "title": "g2" }]);
+  const [games, setGames] = useState([{ "id": 1680865464903, "tasks": ["העבר למי שיושב מולך", "שיר \"היום יום הולדת\"' "], "title": "משחק לדוגמא" }]);
   const [currentGame, setCurrentGame] = useState(null);
   const [title, setTitle] = useState();
   const [gameOn, setGameOn] = useState(false)
+
 
   //Load games from local storage (if exists)
   useEffect(() => {
