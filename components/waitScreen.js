@@ -47,6 +47,34 @@ export default function WaitScreen(props) {
         };
     }, [isPlaying]);
 
+    useEffect(() => {
+        let soundTadaObject = new Audio.Sound();
+
+        const playTada = async () => {
+            try {
+                await soundTadaObject.loadAsync(require('../assets/tada1.mp3'));
+                // await soundTadaObject.setIsLoopingAsync(true);
+                await soundTadaObject.playAsync();
+
+            } catch (error) {
+                // console.log('Error playing sound', error);
+                console.log('music has ended');
+            }
+        };
+
+        if ((timeLeft === 0) && (dispFinalScreen)) {
+            playTada();
+        } else {
+            soundTadaObject.stopAsync();
+        }
+
+        return () => {
+            if (soundTadaObject) {
+                soundTadaObject.unloadAsync();
+            }
+        };
+    }, [timeLeft, dispFinalScreen]);
+
 
     useEffect(() => {
         if (!timeLeft) {
