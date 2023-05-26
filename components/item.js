@@ -39,6 +39,8 @@ const styles = StyleSheet.create({
     gameText: {
         flexWrap: 'wrap-reverse',
         maxWidth: '100%',
+        textAlign: 'right',
+
     },
     deleteWrapper: {
         borderRadius: 20,

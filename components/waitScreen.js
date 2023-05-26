@@ -9,6 +9,7 @@ import ConfettiCannon from 'react-native-confetti-cannon';
 
 
 
+
 export default function WaitScreen(props) {
     //to be later passed in as props
     let starterT = 7
@@ -139,7 +140,11 @@ export default function WaitScreen(props) {
             {(timeLeft === 0) && (!dispFinalScreen) && (<>
                 {/* <SwipeEraser></SwipeEraser> */}
                 <View style={styles.container3}>
+                    {/* scratch card */}
+
+
                     <Text multiline={true} style={styles.task}>{props.tasks[indexToDisplay]}</Text>
+
                     <View style={styles.line2}>
                         <TouchableOpacity onPress={handleNext}>
                             <Text style={styles.prevNext}>הבא</Text>
@@ -184,11 +189,11 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 600,
     },
-    num: {
-        textAlign: 'center',
-        fontSize: 50,
-        fontWeight: 600,
-    },
+    // num: {
+    //     textAlign: 'center',
+    //     fontSize: 50,
+    //     fontWeight: 600,
+    // },
 
     container3: {
         // flex: 0.5,

@@ -13,9 +13,9 @@ export default function GameTitle(props) {
                 </TouchableOpacity>
             </View>
             <View >
-                <TouchableOpacity style={styles.deleteWrapper}>
+                {(props.id !== 1680865464903) && <TouchableOpacity style={styles.deleteWrapper}>
                     <Text style={styles.deleteButton} onPress={() => props.onDelete(props.id)}>X</Text>
-                </TouchableOpacity>
+                </TouchableOpacity>}
             </View>
         </>
     );
@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     gameText: {
         flexWrap: 'wrap-reverse',
         maxWidth: '100%',
+        textAlign: 'right',
     },
     deleteWrapper: {
         borderRadius: 20,
