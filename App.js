@@ -5,6 +5,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import GameTitle from './components/gametitle';
 import Item from './components/item';
 import WaitScreen from './components/waitScreen';
+// import Scratch from './components/scratch';
+
+
+
 
 
 export default function App() {
@@ -194,8 +198,12 @@ export default function App() {
       {!editing && !gameOn && (
         //Home screen - move to component?
         <ScrollView style={styles.container}>
+
+          {/* <Scratch /> */}
+
           <View style={styles.gamesWrapper}>
             <Text style={styles.sectionTitle}>חבילה עוברת</Text>
+
             <View style={styles.games}>
 
               {games.map((game) => (
@@ -329,6 +337,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     width: "80%",
     alignSelf: "flex-end",
+    textAlign: 'right',
   },
   games: {},
 
@@ -350,7 +359,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: "#C0C0C0",
     borderWidth: 1,
-    marginTop: 20,
+    marginTop: 5,
   },
   topLine: {
     display: 'flex',
