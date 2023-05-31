@@ -2,7 +2,7 @@
   "expo": {
     "name": "חבילה עוברת",
     "slug": "havila",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/gifticon.png",
     "userInterfaceStyle": "light",
@@ -11,9 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#fffdef"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.reameir.havila"
@@ -21,7 +19,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/gift.png",
-        "backgroundColor": "#fffdef"
+        "backgroundColor": "#ffffff"
       },
       "package": "com.reameir.havila"
     },

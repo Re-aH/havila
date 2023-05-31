@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import GameTitle from './components/gametitle';
 import Item from './components/item';
 import WaitScreen from './components/waitScreen';
-// import Scratch from './components/scratch';
+
 
 
 
@@ -16,7 +16,7 @@ export default function App() {
   const [item, setItem] = useState();
   const [taskItems, setTaskItems] = useState([]);
   //temporary game list
-  const [games, setGames] = useState([{ "id": 1680865464903, "tasks": ["העבר למי שיושב מולך", "שיר \"היום יום הולדת\"' "], "title": "משחק לדוגמא" }]);
+  const [games, setGames] = useState([{ "id": 1680865464903, "tasks": ["העבר למי שיושב מולך", "שיר \"היום יום הולדת\"' ", "קפצו 10 פעמים על רגל אחת", "צלמו תמונה של כל המשתתפים ביחד", "עשו פרצוף מצחיק", "עשו חיקויי של חיה - והעבירו למי שניחש ראשון", "ריקדו ריקוד קטן"], "title": "משחק לדוגמא" }]);
   const [currentGame, setCurrentGame] = useState(null);
   const [title, setTitle] = useState();
   const [gameOn, setGameOn] = useState(false)
@@ -198,8 +198,6 @@ export default function App() {
       {!editing && !gameOn && (
         //Home screen - move to component?
         <ScrollView style={styles.container}>
-
-          {/* <Scratch /> */}
 
           <View style={styles.gamesWrapper}>
             <Text style={styles.sectionTitle}>חבילה עוברת</Text>
