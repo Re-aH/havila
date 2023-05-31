@@ -1,11 +1,12 @@
 
 
-import { TouchableOpacity, StyleSheet, View, Text, Image } from 'react-native';
-import { useState, useEffect } from 'react';
+import { TouchableOpacity, StyleSheet, View, Text, Image, Animated } from 'react-native';
+import { useState, useEffect, useRef } from 'react';
 import { Audio } from 'expo-av'
 import GiftIcon from './presanimation';
 import openGift from '../assets/opengift.png'
 import ConfettiCannon from 'react-native-confetti-cannon';
+import AnimatedTextEntry from './animatedtextentry';
 
 
 
@@ -126,6 +127,12 @@ export default function WaitScreen(props) {
         props.home()
     }
 
+
+
+
+
+
+
     return (
         <View>
             {(timeLeft > 0) && (<>
@@ -138,19 +145,35 @@ export default function WaitScreen(props) {
             </>)
             }
             {(timeLeft === 0) && (!dispFinalScreen) && (<>
-                {/* <SwipeEraser></SwipeEraser> */}
+
                 <View style={styles.container3}>
-                    {/* scratch card */}
 
+                    <AnimatedTextEntry text={props.tasks[indexToDisplay]} />
 
-                    <Text multiline={true} style={styles.task}>{props.tasks[indexToDisplay]}</Text>
+                    {/* <Animated.View style={[
+                    styles.taskContainer,
+                    {
+                        transform: [
+                            {
+                                translateX: animValue.interpolate({
+                                    inputRange: [0, 1],
+                                    outputRange: [500, 0],
+                                }),
+                            },
+                        ],
+                    },
+                ]}> */}
+
+                    {/* <Text multiline={true} style={styles.task}>{props.tasks[indexToDisplay]}</Text> */}
+                    {/* </Animated.View> */}
+
 
                     <View style={styles.line2}>
                         <TouchableOpacity onPress={handleNext}>
-                            <Text style={styles.prevNext}>הבא</Text>
+                            <Text style={styles.prevNext}>דלג</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={handlePrev} >
-                            <Text style={styles.prevNext}>הקודם</Text>
+                            <Text style={styles.prevNext}>חזור</Text>
                         </TouchableOpacity>
                     </View>
                     <TouchableOpacity onPress={handleCont}>
@@ -174,6 +197,9 @@ export default function WaitScreen(props) {
 }
 
 const styles = StyleSheet.create({
+    taskContainer: {
+        alignSelf: 'center'
+    },
     container4: {
         // flex: 0.5,
         height: '80%',
@@ -226,6 +252,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         width: 80,
         overflow: 'hidden',
+        opacity: 0.6,
     },
     cont: {
         fontSize: 24,
