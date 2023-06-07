@@ -11,17 +11,21 @@
       "resizeMode": "contain",
       "backgroundColor": "#fffdef"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.reameir.havila"
+      "bundleIdentifier": "com.reameir.havila",
+      "buildNumber": "3"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/gift.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.reameir.havila"
+      "package": "com.reameir.havila",
+      "versionCode": 6
     },
     "web": {
       "favicon": "./assets/gifticon.png"

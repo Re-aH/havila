@@ -244,36 +244,40 @@ export default function App() {
                 <Text style={styles.home}>🏠</Text>
               </TouchableOpacity>
             </View>
-            <View style={styles.games}>
-              {/* add task items here */}
-              {currentGame.tasks.map((task, index) => (
-                <Item key={index} text={task} index={index} onChangeText={handleChangeItemText}
-                  onDelete={handleDeleteItem} />
-              ))}
-              <KeyboardAvoidingView
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-                <View style={styles.addGame}>
-                  <TextInput
-                    placeholder="משימה חדשה"
-                    value={item}
-                    onChangeText={text => setItem(text)}
-                    multiline={true}
-                    returnKeyType='done'
-                  />
-                  <TouchableOpacity onPress={handleAddItem}>
-                    <View>
-                      <Text style={styles.plus}>+</Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              </KeyboardAvoidingView>
-              <TouchableOpacity style={styles.playButton} onPress={handleGameOn}>
-                <View style={styles.playButtonText}>
-                  <Text style={styles.playButtonTextBox}>התחל</Text>
-                  <Text style={styles.playButtonTextBox}>משחק</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
+            <ScrollView>
+              <View style={styles.games}>
+                {/* add task items here */}
+                {currentGame.tasks.map((task, index) => (
+                  <Item key={index} text={task} index={index} onChangeText={handleChangeItemText}
+                    onDelete={handleDeleteItem} />
+                ))}
+                <KeyboardAvoidingView
+                  behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+                  <View style={styles.addGame}>
+                    <TextInput
+                      placeholder="משימה חדשה"
+                      value={item}
+                      onChangeText={text => setItem(text)}
+                      multiline={true}
+                      returnKeyType='done'
+                    />
+                    <TouchableOpacity onPress={handleAddItem}>
+                      <View>
+                        <Text style={styles.plus}>+</Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                </KeyboardAvoidingView>
+                <TouchableOpacity style={styles.playButton} onPress={handleGameOn}>
+                  <View style={styles.playButtonText}>
+                    <Text style={styles.playButtonTextBox}>התחל</Text>
+                    <Text style={styles.playButtonTextBox}>משחק</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            </ScrollView>
+
+
           </View>
         </ScrollView>
       )}
@@ -357,7 +361,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: "#C0C0C0",
     borderWidth: 1,
-    marginTop: 5,
+    marginTop: 10,
   },
   topLine: {
     display: 'flex',
@@ -408,7 +412,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: "row",
     justifyContent: 'flex-start',
-    paddingBottom: 80,
+    paddingBottom: 50,
 
 
   },
