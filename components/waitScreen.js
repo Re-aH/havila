@@ -182,15 +182,17 @@ export default function WaitScreen(props) {
                 </View>
             </>)}
             {(timeLeft === 0) && (dispFinalScreen) && (<>
-                <View style={styles.container3}>
-                    <Text multiline={true} style={styles.task}>כל הכבוד, ניצחתם!!!</Text>
+                <View style={styles.containerWinMsg}>
+                    <Text multiline={true} style={styles.win}>כל הכבוד, ניצחתם!!!</Text>
+                    {/* <View style={height = 5}></View> */}
+
                     <Image source={openGift} style={styles.gift} />
 
                     <TouchableOpacity onPress={handleEnd}>
                         <Text style={styles.cont}>סיום</Text>
                     </TouchableOpacity>
+                    <ConfettiCannon count={300} origin={{ x: 100, y: -200 }} explosionSpeed={200} fallSpeed={6000} />
                 </View>
-                <ConfettiCannon count={300} origin={{ x: 100, y: -200 }} explosionSpeed={200} fallSpeed={6000} />
             </>)}
         </View>
     );
@@ -223,19 +225,39 @@ const styles = StyleSheet.create({
 
     container3: {
         // flex: 0.5,
-        height: '80%',
+        height: '89%',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
         alignContent: 'space-between',
-
-
+    },
+    containerWinMsg: {
+        // flex: 0.5,
+        height: '93%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        alignContent: 'space-between',
+        marginTop: -20,
+        position: 'relative',
+        // bottom: -10
     },
     task: {
         flex: 0.5,
         textAlign: 'center',
         fontSize: 30,
         fontWeight: 600,
+
+    },
+    win: {
+        // flex: 0.5,
+        position: 'relative',
+        bottom: 20,
+        textAlign: 'center',
+        fontSize: 30,
+        fontWeight: 600,
+        zIndex: 100,
+        marginBottom: 10,
     },
     line2: {
         display: 'flex',
@@ -264,16 +286,18 @@ const styles = StyleSheet.create({
         width: 100,
         overflow: 'hidden',
         alignSelf: 'center',
+
         // flex: 1,
     },
     gift: {
 
-        marginTop: 20,
-        marginBottom: 20,
+        marginTop: 0,
+        marginBottom: 60,
         alignSelf: 'center',
-        width: '60%',
-        height: '60%',
+        width: 180,
+        height: 180,
         resizeMode: 'contain',
+        zIndex: -10,
     },
 
 });

@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
     container: {
         position: 'relative',
         width: '100%',
-        height: 300,
+        height: 265,
         backgroundColor: 'transparent',
         marginTop: 20,
     },
