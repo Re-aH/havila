@@ -83,12 +83,15 @@ const AnimatedTextEntry = ({ text }) => {
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
-        height: 100,
+        height: '65%',
     },
     text: {
-
+        flex: 1,
+        flexWrap: 'wrap',
         fontSize: 30,
         fontWeight: 600,
+        textAlign: 'center',
+
     },
 });
 
