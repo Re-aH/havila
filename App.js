@@ -271,7 +271,7 @@ export default function App() {
                       returnKeyType='done'
                     />
                     <TouchableOpacity onPress={handleAddItem}>
-                      <View>
+                      <View style={styles.addIconWrapper}>
                         <Ionicons name="add-circle" size={24} color="#fc3535" />
                       </View>
                     </TouchableOpacity>
@@ -367,12 +367,18 @@ const styles = StyleSheet.create({
   addGame: {
     flexDirection: 'row-reverse',
     justifyContent: 'space-between',
+    alignItems: 'center',
     padding: 15,
     backgroundColor: "#f1f1f1",
     borderRadius: 10,
     borderColor: "#C0C0C0",
     borderWidth: 1,
     marginTop: 10,
+  },
+  addIconWrapper: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
   },
   topLine: {
     display: 'flex',
