@@ -5,12 +5,12 @@ import { useState, useEffect, useRef } from 'react';
 import { Audio } from 'expo-av'
 import GiftIcon from './presanimation';
 import openGift from '../assets/opengift.png'
-// import ConfettiCannon from 'react-native-confetti-cannon';
+import ConfettiCannon from 'react-native-confetti-cannon';
 import AnimatedTextEntry from './animatedtextentry';
 import { useWindowSize } from 'react-use'
-import Confetti from 'react-confetti'
+// import Confetti from 'react-confetti'
 
-
+// import Confetti from 'react-native-simple-confetti';
 
 
 export default function WaitScreen(props) {
@@ -193,11 +193,15 @@ export default function WaitScreen(props) {
                     <TouchableOpacity onPress={handleEnd}>
                         <Text style={styles.cont}>סיום</Text>
                     </TouchableOpacity>
-                    {/* <ConfettiCannon count={300} origin={{ x: 100, y: -200 }} explosionSpeed={200} fallSpeed={6000} /> */}
-                    <Confetti
+                    <ConfettiCannon count={300} origin={{ x: 100, y: -200 }} explosionSpeed={200} fallSpeed={6000} />
+                    {/* <Confetti
                         width={width}
                         height={height}
-                    />
+                        run={true}
+                        numberOfPieces={300}
+                        recycle={false}
+                    /> */}
+                    {/* <Confetti count={250} type="fall" /> */}
                 </View>
             </>)}
         </View>
@@ -246,7 +250,7 @@ const styles = StyleSheet.create({
         alignContent: 'space-between',
         marginTop: -20,
         position: 'relative',
-        // bottom: -10
+        // flex: 1,       // bottom: -10
     },
     task: {
         flex: 0.5,

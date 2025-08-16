@@ -16,6 +16,9 @@
     "react-confetti": "^6.4.0",
     "react-dom": "19.0.0",
     "react-native": "0.79.5",
+    "react-native-confetti-cannon": "^1.5.2",
+    "react-native-reanimated": "~3.17.4",
+    "react-native-simple-confetti": "^0.1.2",
     "react-native-svg": "15.11.2",
     "react-native-web": "^0.20.0",
     "react-use": "^17.6.0"
