@@ -1,16 +1,13 @@
 
 
-import { TouchableOpacity, StyleSheet, View, Text, Image, Animated } from 'react-native';
-import { useState, useEffect, useRef } from 'react';
+import { TouchableOpacity, StyleSheet, View, Text, Image } from 'react-native';
+import { useState, useEffect } from 'react';
 import { Audio } from 'expo-av'
 import GiftIcon from './presanimation';
 import openGift from '../assets/opengift.png'
 import ConfettiCannon from 'react-native-confetti-cannon';
 import AnimatedTextEntry from './animatedtextentry';
-// import { useWindowSize } from 'react-use'
-// import Confetti from 'react-confetti'
 
-// import Confetti from 'react-native-simple-confetti';
 
 
 export default function WaitScreen(props) {
@@ -21,7 +18,7 @@ export default function WaitScreen(props) {
     const [isPlaying, setIsPlaying] = useState(false);
     const [randomNumber, setRandomNumber] = useState(Math.floor(Math.random() * 11));
     const [timeLeft, setTimeLeft] = useState(starterT + randomNumber);
-    // const { width, height } = useWindowSize()
+
 
     useEffect(() => {
         let soundObject = new Audio.Sound();

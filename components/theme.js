@@ -9,8 +9,6 @@ export const theme = {
         primaryBlack: '#0C0C0C',
     },
     fontSizes: {
-        small: 12,
-        medium: 16,
         large: 20,
         header: 24,
         xlarge: 32,
@@ -24,8 +22,6 @@ export const theme = {
     gap: {
         small: 8,
         medium: 12,
-        large: 30,
-        xlarge: 40,
     }
 
 };

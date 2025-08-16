@@ -16,11 +16,9 @@ import { theme } from './components/theme';
 export default function App() {
   const [editing, setEditing] = useState(false);
   const [item, setItem] = useState();
-  const [taskItems, setTaskItems] = useState([]);
   //temporary game list
   const [games, setGames] = useState([{ "id": 1680865464903, "tasks": ["העבר למי שיושב מולך", "שיר \"היום יום הולדת\"' ", "קפצו 10 פעמים על רגל אחת", "צלמו תמונה של כל המשתתפים ביחד", "עשו פרצוף מצחיק", "עשו חיקויי של חיה - והעבירו למי שניחש ראשון", "ריקדו ריקוד קטן"], "title": "משחק לדוגמא" }]);
   const [currentGame, setCurrentGame] = useState(null);
-  const [title, setTitle] = useState();
   const [gameOn, setGameOn] = useState(false)
 
 
@@ -130,7 +128,7 @@ export default function App() {
   const handleAddGame = () => {
     const newGame = {
       id: Date.now(),
-      title: "",
+
       tasks: []
     }
 
@@ -153,8 +151,8 @@ export default function App() {
     saveGamesToStorage(games);
     setCurrentGame(null);
     setEditing(false);
-    setTitle("");
-    setTaskItems([]);
+
+
     setGameOn(false);
     setTurnCount(0);
     setPassing(false);
@@ -164,8 +162,8 @@ export default function App() {
   const handlePressGame = (id) => {
     const game = games.find((game) => game.id === id);
     setCurrentGame(game);
-    setTitle(game.title);
-    setTaskItems(game.tasks);
+
+
     setEditing(true);
     // console.log(currentGame);
   };
