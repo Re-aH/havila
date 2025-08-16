@@ -7,7 +7,7 @@ import GiftIcon from './presanimation';
 import openGift from '../assets/opengift.png'
 import ConfettiCannon from 'react-native-confetti-cannon';
 import AnimatedTextEntry from './animatedtextentry';
-import { useWindowSize } from 'react-use'
+// import { useWindowSize } from 'react-use'
 // import Confetti from 'react-confetti'
 
 // import Confetti from 'react-native-simple-confetti';

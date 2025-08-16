@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { Keyboard, StyleSheet, Text, TextInput, View, KeyboardAvoidingView, Platform, TouchableOpacity, ScrollView } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { useState, useEffect, } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import GameTitle from './components/gametitle';
@@ -197,62 +198,70 @@ export default function App() {
     <>
       {!editing && !gameOn && (
         //Home screen - move to component?
-        <ScrollView style={styles.container}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={styles.container}
+        >
+          <ScrollView style={styles.container}>
+            <View style={styles.gamesWrapper}>
+              <Text style={styles.sectionTitle}>חבילה עוברת</Text>
 
-          <View style={styles.gamesWrapper}>
-            <Text style={styles.sectionTitle}>חבילה עוברת</Text>
+              <View style={styles.games}>
 
-            <View style={styles.games}>
-
-              {games.map((game) => (
-                <GameTitle
-                  key={game.id}
-                  id={game.id}
-                  title={game.title}
-                  onPress={() => handlePressGame(game.id)}
-                  onDelete={handleDeleteGame}
-                />
-              ))}
+                {games.map((game) => (
+                  <GameTitle
+                    key={game.id}
+                    id={game.id}
+                    title={game.title}
+                    onPress={() => handlePressGame(game.id)}
+                    onDelete={handleDeleteGame}
+                  />
+                ))}
 
 
-              <View style={styles.addGame}>
-                <Text>משחק חדש</Text>
-                <TouchableOpacity onPress={handleAddGame}>
-                  <View sytle={styles.plusWrapper}>
-                    <Text style={styles.plus}>+</Text>
-                  </View>
-                </TouchableOpacity>
+                <View style={styles.addGame}>
+                  <Text>משחק חדש</Text>
+                  <TouchableOpacity onPress={handleAddGame}>
+                    <View style={styles.plusWrapper}>
+                      <Ionicons name="add-circle" size={24} color="#fc3535" />
+                    </View>
+                  </TouchableOpacity>
+                </View>
+
               </View>
-
             </View>
-          </View>
-        </ScrollView>
+          </ScrollView>
+        </KeyboardAvoidingView>
       )}
 
       {editing && !gameOn && (
         // editing game screen - move to component
-        <ScrollView style={styles.container}>
-          <View style={styles.gamesWrapper}>
-            <View style={styles.topLine}>
-              <TextInput
-                style={styles.sectionTitle}
-                placeholder={'שם משחק'}
-                value={currentGame.title}
-                onChangeText={handleGameTitleChange}
-              />
-              <TouchableOpacity onPress={handlePressHome}>
-                <Text style={styles.home}>🏠</Text>
-              </TouchableOpacity>
-            </View>
-            <ScrollView>
-              <View style={styles.games}>
-                {/* add task items here */}
-                {currentGame.tasks.map((task, index) => (
-                  <Item key={index} text={task} index={index} onChangeText={handleChangeItemText}
-                    onDelete={handleDeleteItem} />
-                ))}
-                <KeyboardAvoidingView
-                  behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={styles.container}
+        >
+          <ScrollView style={styles.container}>
+            <View style={styles.gamesWrapper}>
+              <View style={styles.topLine}>
+                <TextInput
+                  style={styles.sectionTitle}
+                  placeholder={'שם משחק'}
+                  value={currentGame.title}
+                  onChangeText={handleGameTitleChange}
+                />
+                <TouchableOpacity onPress={handlePressHome}>
+                  <View style={styles.home}>
+                    <Ionicons name="home" size={18} color="white" />
+                  </View>
+                </TouchableOpacity>
+              </View>
+              <ScrollView>
+                <View style={styles.games}>
+                  {/* add task items here */}
+                  {currentGame.tasks.map((task, index) => (
+                    <Item key={index} text={task} index={index} onChangeText={handleChangeItemText}
+                      onDelete={handleDeleteItem} />
+                  ))}
                   <View style={styles.addGame}>
                     <TextInput
                       placeholder="משימה חדשה"
@@ -263,30 +272,32 @@ export default function App() {
                     />
                     <TouchableOpacity onPress={handleAddItem}>
                       <View>
-                        <Text style={styles.plus}>+</Text>
+                        <Ionicons name="add-circle" size={24} color="#fc3535" />
                       </View>
                     </TouchableOpacity>
                   </View>
-                </KeyboardAvoidingView>
-                <TouchableOpacity style={styles.playButton} onPress={handleGameOn}>
-                  <View style={styles.playButtonText}>
-                    <Text style={styles.playButtonTextBox}>התחל</Text>
-                    <Text style={styles.playButtonTextBox}>משחק</Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
-            </ScrollView>
+                  <TouchableOpacity style={styles.playButton} onPress={handleGameOn}>
+                    <View style={styles.playButtonText}>
+                      <Text style={styles.playButtonTextBox}>התחל</Text>
+                      <Text style={styles.playButtonTextBox}>משחק</Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              </ScrollView>
 
 
-          </View>
-        </ScrollView>
+            </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
       )}
       {gameOn && (
         <View style={styles.container2}>
           <View style={styles.gamesWrapper}>
             <View style={styles.topLine2}>
               <TouchableOpacity onPress={handlePressHome}>
-                <Text style={styles.home2}>🏠</Text>
+                <View style={styles.home2}>
+                  <Ionicons name="home" size={18} color="white" />
+                </View>
               </TouchableOpacity>
             </View>
 
@@ -372,10 +383,10 @@ const styles = StyleSheet.create({
   home: {
     backgroundColor: '#fc3535',
     borderRadius: 15,
-    fontSize: 18,
     width: 30,
     height: 30,
-    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
     overflow: 'hidden',
   },
 
@@ -393,7 +404,9 @@ const styles = StyleSheet.create({
   },
 
   playButtonText: {
-    paddingTop: 14,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
   },
 
   playButtonTextBox: {
@@ -419,12 +432,11 @@ const styles = StyleSheet.create({
   home2: {
     backgroundColor: '#fc3535',
     borderRadius: 15,
-    fontSize: 18,
     width: 30,
     height: 30,
-    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
     overflow: 'hidden',
-
   },
 
   GameText: {

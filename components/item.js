@@ -1,6 +1,7 @@
 
 
 import { TextInput, TouchableOpacity, StyleSheet, View, Text } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 
 export default function Item(props) {
@@ -19,8 +20,8 @@ export default function Item(props) {
                 </TouchableOpacity>
             </View>
             <View >
-                <TouchableOpacity style={styles.deleteWrapper}>
-                    <Text style={styles.deleteButton} onPress={() => props.onDelete(props.index)}>X</Text>
+                <TouchableOpacity style={styles.deleteWrapper} onPress={() => props.onDelete(props.index)}>
+                    <Ionicons name="close" size={16} color="white" />
                 </TouchableOpacity>
             </View>
         </View>
@@ -55,10 +56,18 @@ const styles = StyleSheet.create({
         borderWidth: StyleSheet.hairlineWidth,
         borderColor: "#C0C0C0",
     },
-    deleteButton: {
-        paddingTop: 1,
-        color: 'white',
-        textAlign: 'center',
+    deleteWrapper: {
+        borderRadius: 20,
+        backgroundColor: '#fc3535',
+        width: 20,
+        height: 20,
+        position: 'relative',
+        bottom: 11,
+        alignSelf: 'center',
+        borderWidth: StyleSheet.hairlineWidth,
+        borderColor: "#C0C0C0",
+        justifyContent: 'center',
+        alignItems: 'center',
     }
 
 
