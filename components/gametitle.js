@@ -25,7 +25,7 @@ export default function GameTitle(props) {
 
 const styles = StyleSheet.create({
     game: {
-        padding: 15,
+        padding: theme.gap.medium,
         backgroundColor: theme.colors.lightGray,
         borderRadius: 10,
         borderColor: theme.colors.borderGray,
@@ -40,8 +40,8 @@ const styles = StyleSheet.create({
     deleteWrapper: {
         borderRadius: 20,
         backgroundColor: theme.colors.buttonBackgroundColor,
-        width: 20,
-        height: 20,
+        width: theme.sizes.small,
+        height: theme.sizes.small,
         position: 'relative',
         bottom: 11,
         alignSelf: 'center',

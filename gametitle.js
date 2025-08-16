@@ -35,12 +35,10 @@ const styles = StyleSheet.create({
         maxWidth: '100%',
     },
     deleteWrapper: {
-        borderRadius: 20,
-        backgroundColor: '#fc3535',
-
-        width: 20,
-        height: 20,
-
+        borderRadius: theme.sizes.small / 2,
+        backgroundColor: theme.colors.buttonBackgroundColor,
+        width: theme.sizes.small,
+        height: theme.sizes.small,
         position: 'relative',
         bottom: 11,
         alignSelf: 'center',

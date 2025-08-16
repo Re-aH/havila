@@ -21,7 +21,7 @@ export default function WaitScreen(props) {
     const [isPlaying, setIsPlaying] = useState(false);
     const [randomNumber, setRandomNumber] = useState(Math.floor(Math.random() * 11));
     const [timeLeft, setTimeLeft] = useState(starterT + randomNumber);
-    const { width, height } = useWindowSize()
+    // const { width, height } = useWindowSize()
 
     useEffect(() => {
         let soundObject = new Audio.Sound();

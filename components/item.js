@@ -1,6 +1,6 @@
 
 
-import { TextInput, TouchableOpacity, StyleSheet, View, Text } from 'react-native';
+import { TextInput, TouchableOpacity, StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { theme } from './theme';
 
@@ -31,7 +31,7 @@ export default function Item(props) {
 
 const styles = StyleSheet.create({
     game: {
-        padding: 15,
+        padding: theme.gap.small,
         backgroundColor: theme.colors.lightGray,
         borderRadius: 10,
         borderColor: theme.colors.borderGray,
@@ -42,13 +42,14 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap-reverse',
         maxWidth: '100%',
         textAlign: 'right',
+        color: theme.colors.primaryBlack,
 
     },
     deleteWrapper: {
-        borderRadius: 20,
+        borderRadius: theme.sizes.small / 2,
         backgroundColor: theme.colors.buttonBackgroundColor,
-        width: 20,
-        height: 20,
+        width: theme.sizes.small,
+        height: theme.sizes.small,
         position: 'relative',
         bottom: 11,
         alignSelf: 'center',

@@ -5,6 +5,27 @@ export const theme = {
         backgroundColor: '#fffdef',
         lightGray: '#f1f1f1',
         borderGray: '#C0C0C0',
-        white: 'white',
+        white: '#F5F5F5',
+        primaryBlack: '#0C0C0C',
+    },
+    fontSizes: {
+        small: 12,
+        medium: 16,
+        large: 20,
+        header: 24,
+        xlarge: 32,
+    },
+    sizes: {
+        small: 18,
+        medium: 24,
+        large: 32,
+        xlarge: 80,
+    },
+    gap: {
+        small: 8,
+        medium: 12,
+        large: 30,
+        xlarge: 40,
     }
+
 };
