@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import GameTitle from './components/gametitle';
 import Item from './components/item';
 import WaitScreen from './components/waitScreen';
+import { theme } from './components/theme';
 
 
 
@@ -272,7 +273,7 @@ export default function App() {
                     />
                     <TouchableOpacity onPress={handleAddItem}>
                       <View style={styles.addIconWrapper}>
-                        <Ionicons name="add-circle" size={24} color="#fc3535" />
+                        <Ionicons name="add-circle" size={24} color={theme.colors.buttonBackgroundColor} />
                       </View>
                     </TouchableOpacity>
                   </View>
@@ -338,7 +339,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fffdef',
+    backgroundColor: theme.colors.backgroundColor,
 
   },
   gamesWrapper: {
@@ -355,8 +356,8 @@ const styles = StyleSheet.create({
   games: {},
 
   plus: {
-    backgroundColor: '#fc3535',
-    color: 'white',
+    backgroundColor: theme.colors.buttonBackgroundColor,
+    color: theme.colors.white,
     borderRadius: 12,
     fontSize: 18,
     width: 24,
@@ -369,9 +370,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 15,
-    backgroundColor: "#f1f1f1",
+    backgroundColor: theme.colors.lightGray,
     borderRadius: 10,
-    borderColor: "#C0C0C0",
+    borderColor: theme.colors.borderGray,
     borderWidth: 1,
     marginTop: 10,
   },
@@ -387,7 +388,7 @@ const styles = StyleSheet.create({
 
   },
   home: {
-    backgroundColor: '#fc3535',
+    backgroundColor: theme.colors.buttonBackgroundColor,
     borderRadius: 15,
     width: 30,
     height: 30,
@@ -400,12 +401,12 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignSelf: 'center',
     alignItems: 'center',
-    backgroundColor: '#c50000',
+    backgroundColor: theme.colors.buttonBackgroundColor,
     borderRadius: 40,
     width: 80,
     height: 80,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: "#C0C0C0",
+    borderColor: theme.colors.borderGray,
     marginTop: 50,
   },
 
@@ -417,12 +418,12 @@ const styles = StyleSheet.create({
 
   playButtonTextBox: {
     fontSize: 20,
-    color: 'white',
+    color: theme.colors.white,
   },
 
   container2: {
     flex: 1,
-    backgroundColor: '#fffdef',
+    backgroundColor: theme.colors.backgroundColor,
     justifyContent: 'space-between',
     // rowGap: 20,
 
@@ -436,7 +437,7 @@ const styles = StyleSheet.create({
 
   },
   home2: {
-    backgroundColor: '#fc3535',
+    backgroundColor: theme.colors.buttonBackgroundColor,
     borderRadius: 15,
     width: 30,
     height: 30,
@@ -456,12 +457,12 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignSelf: 'center',
     alignItems: 'center',
-    backgroundColor: '#c50000',
+    backgroundColor: theme.colors.primaryRed,
     borderRadius: 40,
     width: 80,
     height: 80,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: "#C0C0C0",
+    borderColor: theme.colors.borderGray,
     marginTop: 120,
   },
 

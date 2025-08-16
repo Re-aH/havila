@@ -2,6 +2,7 @@
 
 import { TextInput, TouchableOpacity, StyleSheet, View, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { theme } from './theme';
 
 
 export default function Item(props) {
@@ -21,7 +22,7 @@ export default function Item(props) {
             </View>
             <View >
                 <TouchableOpacity style={styles.deleteWrapper} onPress={() => props.onDelete(props.index)}>
-                    <Ionicons name="close" size={16} color="white" />
+                    <Ionicons name="close" size={16} color={theme.colors.white} />
                 </TouchableOpacity>
             </View>
         </View>
@@ -31,9 +32,9 @@ export default function Item(props) {
 const styles = StyleSheet.create({
     game: {
         padding: 15,
-        backgroundColor: "#f1f1f1",
+        backgroundColor: theme.colors.lightGray,
         borderRadius: 10,
-        borderColor: "#C0C0C0",
+        borderColor: theme.colors.borderGray,
         borderWidth: 1,
         marginTop: 20,
     },
@@ -45,27 +46,14 @@ const styles = StyleSheet.create({
     },
     deleteWrapper: {
         borderRadius: 20,
-        backgroundColor: '#fc3535',
-
-        width: 20,
-        height: 20,
-
-        position: 'relative',
-        bottom: 11,
-        alignSelf: 'center',
-        borderWidth: StyleSheet.hairlineWidth,
-        borderColor: "#C0C0C0",
-    },
-    deleteWrapper: {
-        borderRadius: 20,
-        backgroundColor: '#fc3535',
+        backgroundColor: theme.colors.buttonBackgroundColor,
         width: 20,
         height: 20,
         position: 'relative',
         bottom: 11,
         alignSelf: 'center',
         borderWidth: StyleSheet.hairlineWidth,
-        borderColor: "#C0C0C0",
+        borderColor: theme.colors.borderGray,
         justifyContent: 'center',
         alignItems: 'center',
     }
