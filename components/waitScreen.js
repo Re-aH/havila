@@ -5,8 +5,10 @@ import { useState, useEffect, useRef } from 'react';
 import { Audio } from 'expo-av'
 import GiftIcon from './presanimation';
 import openGift from '../assets/opengift.png'
-import ConfettiCannon from 'react-native-confetti-cannon';
+// import ConfettiCannon from 'react-native-confetti-cannon';
 import AnimatedTextEntry from './animatedtextentry';
+import { useWindowSize } from 'react-use'
+import Confetti from 'react-confetti'
 
 
 
@@ -19,7 +21,7 @@ export default function WaitScreen(props) {
     const [isPlaying, setIsPlaying] = useState(false);
     const [randomNumber, setRandomNumber] = useState(Math.floor(Math.random() * 11));
     const [timeLeft, setTimeLeft] = useState(starterT + randomNumber);
-
+    const { width, height } = useWindowSize()
 
     useEffect(() => {
         let soundObject = new Audio.Sound();
@@ -191,7 +193,11 @@ export default function WaitScreen(props) {
                     <TouchableOpacity onPress={handleEnd}>
                         <Text style={styles.cont}>סיום</Text>
                     </TouchableOpacity>
-                    <ConfettiCannon count={300} origin={{ x: 100, y: -200 }} explosionSpeed={200} fallSpeed={6000} />
+                    {/* <ConfettiCannon count={300} origin={{ x: 100, y: -200 }} explosionSpeed={200} fallSpeed={6000} /> */}
+                    <Confetti
+                        width={width}
+                        height={height}
+                    />
                 </View>
             </>)}
         </View>
