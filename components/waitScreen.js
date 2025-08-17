@@ -203,6 +203,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: theme.fontSizes.xlarge,
         fontWeight: 600,
+        backgroundColor: 'rgba(255, 254, 202, 0.5)',
     },
 
 
@@ -231,6 +232,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: theme.fontSizes.xlarge,
         fontWeight: 600,
+        // backgroundColor: 'rgba(255, 254, 202, 0.5)',
 
     },
     win: {
@@ -248,6 +250,8 @@ const styles = StyleSheet.create({
         flex: 0.25,
         flexDirection: 'row',
         justifyContent: 'space-between',
+        marginLeft: 10,
+        marginRight: 10,
     },
     prevNext: {
         fontSize: theme.fontSizes.small,

@@ -87,11 +87,13 @@ const styles = StyleSheet.create({
         height: '65%',
     },
     text: {
-        flex: 1,
+        // flex: 1,
         flexWrap: 'wrap',
         fontSize: theme.fontSizes.xlarge,
         fontWeight: 600,
         textAlign: 'center',
+        justifyContent: 'flex-start',
+        backgroundColor: 'rgba(255, 254, 202, 0.5)',
 
     },
 });
