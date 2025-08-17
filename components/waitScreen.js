@@ -4,7 +4,7 @@ import { TouchableOpacity, StyleSheet, View, Text, Image } from 'react-native';
 import { useState, useEffect } from 'react';
 import { Audio } from 'expo-av'
 import GiftIcon from './presanimation';
-import openGift from '../assets/opengift.png'
+import openGift from '../assets/openboxnoback.png'
 import ConfettiCannon from 'react-native-confetti-cannon';
 import AnimatedTextEntry from './animatedtextentry';
 import { theme } from './theme';
@@ -51,24 +51,27 @@ export default function WaitScreen(props) {
     useEffect(() => {
         let soundTadaObject = new Audio.Sound();
 
-        const playTada = async () => {
+        const loadTada = async () => {
             try {
                 await soundTadaObject.loadAsync(require('../assets/tada1.mp3'));
-
-                await soundTadaObject.playAsync();
-                setIsPlaying(true);
-
             } catch (error) {
-                // console.log('Error playing sound', error);
-                console.log('tada could not be played');
+                console.log('Error loading tada sound', error);
             }
         };
 
-        if ((timeLeft === 0) && (dispFinalScreen)) {
-            // setIsPlaying(false);
+        loadTada();
+
+        const playTada = async () => {
+            try {
+                await soundTadaObject.playAsync();
+            } catch (error) {
+                console.log('Error playing tada sound', error);
+            }
+        };
+
+        if (timeLeft === 0 && dispFinalScreen && !isPlaying) {
             playTada();
-        } else {
-            soundTadaObject.stopAsync();
+            // setIsPlaying(true); // Mark as playing to avoid re-triggering
         }
 
         return () => {
@@ -266,12 +269,14 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
     gift: {
-        marginTop: 0,
-        marginBottom: 60,
+        marginTop: -130,
+        // paddingBottom: 20,
+        marginBottom: -70,
         alignSelf: 'center',
-        width: 180,
-        height: 180,
+        width: '65%',
+        // height: 200,
         resizeMode: 'contain',
+        // boxShadow: 'box-shadow: 1px 2px 10px 13px rgba(250, 249, 249, 0.75);',
         // zIndex: -10,
     },
 
