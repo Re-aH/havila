@@ -2,14 +2,16 @@
 
 import { TouchableOpacity, StyleSheet, View, Text, Image } from 'react-native';
 import { useState, useEffect } from 'react';
-import { Audio } from 'expo-av'
+// import { Audio } from 'expo-av';
+import { useAudioPlayer } from 'expo-audio';
 import GiftIcon from './presanimation';
 import openGift from '../assets/openboxnoback.png'
 import ConfettiCannon from 'react-native-confetti-cannon';
 import AnimatedTextEntry from './animatedtextentry';
 import { theme } from './theme';
 
-
+const partyGroove = require('../assets/partyGroove.mp3');
+const tada = require('../assets/tada1.mp3');
 
 export default function WaitScreen(props) {
     //to be later passed in as props
@@ -21,64 +23,61 @@ export default function WaitScreen(props) {
     const [timeLeft, setTimeLeft] = useState(starterT + randomNumber);
 
 
+    const player1 = useAudioPlayer(partyGroove);
+    const player2 = useAudioPlayer(tada);
     useEffect(() => {
-        let soundObject = new Audio.Sound();
-
-        const playSound = async () => {
-            try {
-                await soundObject.loadAsync(require('../assets/partyGroove.mp3'));
-                await soundObject.playAsync();
-                setIsPlaying(true);
-            } catch (error) {
-                // console.log('Error playing sound', error);
-                console.log('party groove has ended');
-            }
-        };
 
         if (isPlaying) {
-            playSound();
+            player1.seekTo(0);
+            player1.play();
         } else {
-            soundObject.stopAsync();
+            // soundObject.stopAsync();
+            player1.pause();
         }
 
-        return () => {
-            if (soundObject) {
-                soundObject.unloadAsync();
-            }
-        };
+
     }, [isPlaying]);
 
     useEffect(() => {
-        let soundTadaObject = new Audio.Sound();
+        // let soundTadaObject = new Audio.Sound();
 
-        const loadTada = async () => {
-            try {
-                await soundTadaObject.loadAsync(require('../assets/tada1.mp3'));
-            } catch (error) {
-                console.log('Error loading tada sound', error);
-            }
-        };
+        // const loadTada = async () => {
+        //     try {
+        //         await soundTadaObject.loadAsync(require('../assets/tada1.mp3'));
+        //     } catch (error) {
+        //         console.log('Error loading tada sound', error);
+        //     }
+        // };
 
-        loadTada();
+        // loadTada();
 
-        const playTada = async () => {
-            try {
-                await soundTadaObject.playAsync();
-            } catch (error) {
-                console.log('Error playing tada sound', error);
-            }
-        };
+        // const playTada = async () => {
+        //     try {
+        //         await soundTadaObject.playAsync();
+        //     } catch (error) {
+        //         console.log('Error playing tada sound', error);
+        //     }
+        // };
 
-        if (timeLeft === 0 && dispFinalScreen && !isPlaying) {
-            playTada();
+
+
+        if (timeLeft === 0 && dispFinalScreen) {
+            console.log('hihihi');
+            player1.pause()
+            player2.seekTo(0);
+            player2.play();
+
+
+            // playTada();
             // setIsPlaying(true); // Mark as playing to avoid re-triggering
         }
 
-        return () => {
-            if (soundTadaObject) {
-                soundTadaObject.unloadAsync();
-            }
-        };
+
+        // return () => {
+        //     if (soundTadaObject) {
+        //         soundTadaObject.unloadAsync();
+        //     }
+        // };
     }, [timeLeft, dispFinalScreen]);
 
 

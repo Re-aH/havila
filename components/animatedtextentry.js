@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { Animated, Text, StyleSheet } from 'react-native';
-import { Audio } from 'expo-av'
+// import { Audio } from 'expo-av';
+import { useAudioPlayer } from 'expo-audio';
 import { theme } from './theme';
 
+const audioSource = require('../assets/ring.mp3');
 const AnimatedTextEntry = ({ text }) => {
     const translateX = useRef(new Animated.Value(300)).current;
     const rotate = useRef(new Animated.Value(0)).current;
@@ -33,19 +35,17 @@ const AnimatedTextEntry = ({ text }) => {
         sequenceAnimation.start();
     }, []);
 
-
+    const player = useAudioPlayer(audioSource);
     useEffect(() => {
-        let soundTextObject = new Audio.Sound();
+        // let soundTextObject = new Audio.Sound();
 
         const playSoundForText = async () => {
             try {
-                await soundTextObject.loadAsync(require('../assets/ring.mp3'));
-                // await soundTadaObject.setIsLoopingAsync(true);
-                await soundTextObject.playAsync();
-
+                player.seekTo(0);
+                player.play();
             } catch (error) {
                 // console.log('Error playing sound', error);
-                console.log('music has ended');
+                console.log('could not play ring', error);
             }
         };
 
@@ -53,11 +53,11 @@ const AnimatedTextEntry = ({ text }) => {
         playSoundForText();
 
 
-        return () => {
-            if (soundTextObject) {
-                soundTextObject.unloadAsync();
-            }
-        };
+        // return () => {
+        //     if (soundTextObject) {
+        //         soundTextObject.unloadAsync();
+        //     }
+        // };
     }, []);
 
     const tiltInterpolate = rotate.interpolate({

@@ -11,7 +11,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#fffdef"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.reameir.havila",
@@ -33,6 +35,9 @@
         "projectId": "78ba3fb8-3a8a-4fb7-9fcf-385a035e0180"
       }
     },
-    "owner": "rea_meir"
+    "owner": "rea_meir",
+    "plugins": [
+      "expo-audio"
+    ]
   }
 }
