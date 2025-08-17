@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap-reverse',
         maxWidth: '100%',
         textAlign: 'right',
+        // backgroundColor: 'rgba(255, 254, 202, 0.5)',
     },
     deleteWrapper: {
         borderRadius: 20,

@@ -138,7 +138,7 @@ export default function WaitScreen(props) {
 
 
     return (
-        <View>
+        <View style={styles.mainContainer}>
             {(timeLeft > 0) && (<>
                 <View style={styles.container4} >
                     <Text style={styles.pass}>העבירו את החבילה</Text>
@@ -186,6 +186,7 @@ export default function WaitScreen(props) {
 }
 
 const styles = StyleSheet.create({
+
     taskContainer: {
         alignSelf: 'center'
     },
@@ -214,13 +215,14 @@ const styles = StyleSheet.create({
         alignContent: 'space-between',
     },
     containerWinMsg: {
-
-        height: '93%',
+        // backgroundColor: 'red',
+        height: '90%',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-between',
-        alignContent: 'space-between',
-        marginTop: -20,
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+        paddingVertical: 20,
         position: 'relative',
 
     },
@@ -239,6 +241,7 @@ const styles = StyleSheet.create({
         fontWeight: 600,
         zIndex: 100,
         marginBottom: 10,
+        backgroundColor: 'rgba(255, 254, 202, 0.5)',
     },
     line2: {
         display: 'flex',
@@ -269,15 +272,11 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
     gift: {
-        marginTop: -130,
-        // paddingBottom: 20,
-        marginBottom: -70,
         alignSelf: 'center',
         width: '65%',
-        // height: 200,
+        height: 250,
         resizeMode: 'contain',
-        // boxShadow: 'box-shadow: 1px 2px 10px 13px rgba(250, 249, 249, 0.75);',
-        // zIndex: -10,
+        marginBottom: 30,
     },
 
 });

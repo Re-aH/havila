@@ -489,6 +489,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'transparent',
     justifyContent: 'space-between',
+    // alignItems: 'center',
     // rowGap: 20,
 
   },
@@ -497,6 +498,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: 'flex-start',
     paddingBottom: 50,
+    // alignSelf: 'stretch'
 
 
   },
@@ -513,7 +515,9 @@ const styles = StyleSheet.create({
   GameText: {
     fontSize: theme.fontSizes.xlarge,
     padding: 10,
-    textAlign: 'center'
+    textAlign: 'center',
+    margin: 5,
+    backgroundColor: 'rgba(255, 254, 202, 0.5)',
 
   },
 
@@ -521,7 +525,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignSelf: 'center',
     alignItems: 'center',
-    backgroundColor: theme.colors.primaryRed,
+    backgroundColor: theme.colors.buttonBackgroundColor,
     borderRadius: theme.sizes.xlarge / 2,
     width: theme.sizes.xlarge,
     height: theme.sizes.xlarge,
