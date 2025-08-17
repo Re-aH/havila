@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { Keyboard, StyleSheet, Text, TextInput, View, KeyboardAvoidingView, Platform, TouchableOpacity, ScrollView } from 'react-native';
+import { Keyboard, StyleSheet, Text, TextInput, View, KeyboardAvoidingView, Platform, TouchableOpacity, ScrollView, ImageBackground } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useState, useEffect, } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -7,6 +7,9 @@ import GameTitle from './components/gametitle';
 import Item from './components/item';
 import WaitScreen from './components/waitScreen';
 import { theme } from './components/theme';
+import openBox from './assets/10a11053-01f8-4b89-a579-d445a9114243.jpg';
+import openBox2 from './assets/c4a625f4-d5c8-4d4f-b482-773eb7af0e6b.jpg';
+import openBox3 from './assets/imageredback.jpg';
 
 
 
@@ -21,7 +24,7 @@ export default function App() {
   const [currentGame, setCurrentGame] = useState(null);
   const [gameOn, setGameOn] = useState(false)
 
-
+  // openBox3.filter()
   //Load games from local storage (if exists)
   useEffect(() => {
     const loadGames = async () => {
@@ -228,132 +231,140 @@ export default function App() {
     <>
       {!editing && !gameOn && (
         //Home screen - move to component?
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          style={styles.container}
-        >
-          <ScrollView style={styles.container}>
-            <View style={styles.gamesWrapper}>
-              <Text style={styles.sectionTitle}>חבילה עוברת</Text>
 
-              <View style={styles.games}>
+        <ImageBackground source={openBox} style={styles.background} resizeMode="cover">
+          <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={styles.container}
+          >
+            <ScrollView style={styles.container}>
+              <View style={styles.gamesWrapper}>
+                <Text style={styles.sectionTitle}>חבילה עוברת</Text>
 
-                {games.map((game) => (
-                  <GameTitle
-                    key={game.id}
-                    id={game.id}
-                    title={game.title}
-                    onPress={() => handlePressGame(game.id)}
-                    onDelete={handleDeleteGame}
-                  />
-                ))}
-
-
-                <View style={styles.addGame}>
-                  <Text>משחק חדש</Text>
-                  <TouchableOpacity onPress={handleAddGame}>
-                    <View style={styles.plusWrapper}>
-                      <Ionicons name="add-circle" size={theme.sizes.medium} color={theme.colors.buttonBackgroundColor} />
-                    </View>
-                  </TouchableOpacity>
-                </View>
-
-              </View>
-            </View>
-          </ScrollView>
-        </KeyboardAvoidingView>
-      )}
-
-      {editing && !gameOn && (
-        // editing game screen - move to component
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          style={styles.container}
-        >
-          <ScrollView style={styles.container}>
-            <View style={styles.gamesWrapper}>
-              <View style={styles.topLine}>
-                <TextInput
-                  style={styles.sectionTitle}
-                  placeholder={'שם משחק'}
-                  value={currentGame.title}
-                  onChangeText={handleGameTitleChange}
-                />
-                <TouchableOpacity onPress={handlePressHome}>
-                  <View style={styles.home}>
-                    <Ionicons name="home" size={theme.sizes.small} color={theme.colors.white} />
-                  </View>
-                </TouchableOpacity>
-              </View>
-              <ScrollView>
                 <View style={styles.games}>
-                  {/* add task items here */}
-                  {currentGame.tasks.map((task, index) => (
-                    <Item key={index} text={task} index={index} onChangeText={handleChangeItemText}
-                      onDelete={handleDeleteItem} />
-                  ))}
-                  <View style={styles.addGame}>
-                    <TextInput
-                      placeholder="משימה חדשה"
-                      value={item}
-                      onChangeText={text => setItem(text)}
-                      multiline={true}
-                      returnKeyType='done'
+
+                  {games.map((game) => (
+                    <GameTitle
+                      key={game.id}
+                      id={game.id}
+                      title={game.title}
+                      onPress={() => handlePressGame(game.id)}
+                      onDelete={handleDeleteGame}
                     />
-                    <TouchableOpacity onPress={handleAddItem}>
-                      <View style={styles.addIconWrapper}>
+                  ))}
+
+
+                  <View style={styles.addGame}>
+                    <Text>משחק חדש</Text>
+                    <TouchableOpacity onPress={handleAddGame}>
+                      <View style={styles.plusWrapper}>
                         <Ionicons name="add-circle" size={theme.sizes.medium} color={theme.colors.buttonBackgroundColor} />
                       </View>
                     </TouchableOpacity>
                   </View>
-                  <TouchableOpacity style={styles.playButton} onPress={handleGameOn}>
+
+                </View>
+              </View>
+            </ScrollView>
+          </KeyboardAvoidingView>
+        </ImageBackground>
+
+      )}
+
+      {editing && !gameOn && (
+        // editing game screen - move to component
+        <ImageBackground source={openBox2} style={styles.background} resizeMode="cover">
+          <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={styles.container}
+          >
+            <ScrollView style={styles.scrollContent}>
+              <View style={styles.gamesWrapper}>
+                <View style={styles.topLine}>
+                  <TextInput
+                    style={styles.sectionTitle}
+                    placeholder={'שם משחק'}
+                    value={currentGame.title}
+                    onChangeText={handleGameTitleChange}
+                  />
+                  <TouchableOpacity onPress={handlePressHome}>
+                    <View style={styles.home}>
+                      <Ionicons name="home" size={theme.sizes.small} color={theme.colors.white} />
+                    </View>
+                  </TouchableOpacity>
+                </View>
+                <ScrollView>
+                  <View style={styles.games}>
+                    {/* add task items here */}
+                    {currentGame.tasks.map((task, index) => (
+                      <Item key={index} text={task} index={index} onChangeText={handleChangeItemText}
+                        onDelete={handleDeleteItem} />
+                    ))}
+                    <View style={styles.addGame}>
+                      <TextInput
+                        placeholder="משימה חדשה"
+                        value={item}
+                        onChangeText={text => setItem(text)}
+                        multiline={true}
+                        returnKeyType='done'
+                      />
+                      <TouchableOpacity onPress={handleAddItem}>
+                        <View style={styles.addIconWrapper}>
+                          <Ionicons name="add-circle" size={theme.sizes.medium} color={theme.colors.buttonBackgroundColor} />
+                        </View>
+                      </TouchableOpacity>
+                    </View>
+                    <TouchableOpacity style={styles.playButton} onPress={handleGameOn}>
+                      <View style={styles.playButtonText}>
+                        <Text style={styles.playButtonTextBox}>התחל</Text>
+                        <Text style={styles.playButtonTextBox}>משחק</Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                </ScrollView>
+
+
+              </View>
+            </ScrollView>
+          </KeyboardAvoidingView>
+        </ImageBackground>
+      )}
+      {gameOn && (
+        <ImageBackground source={openBox3} style={styles.background} resizeMode="cover">
+          <View style={styles.container2}>
+            <View style={styles.gamesWrapper}>
+              <View style={styles.topLine2}>
+                <TouchableOpacity onPress={handlePressHome}>
+                  <View style={styles.home2}>
+                    <Ionicons name="home" size={theme.sizes.small} color={theme.colors.white} />
+                  </View>
+                </TouchableOpacity>
+              </View>
+
+              {!passing && (turnCount === 0) && (
+                <>
+                  <Text style={styles.GameText}>המשחק:</Text>
+                  <Text style={styles.GameText}>"{currentGame.title}"</Text>
+                  <Text style={styles.GameText}>מוכן</Text>
+                  <TouchableOpacity style={styles.playButton2} onPress={handleStartPlaying}>
                     <View style={styles.playButtonText}>
                       <Text style={styles.playButtonTextBox}>התחל</Text>
                       <Text style={styles.playButtonTextBox}>משחק</Text>
                     </View>
                   </TouchableOpacity>
-                </View>
-              </ScrollView>
+                </>
+              )}
+
+              {passing && (turnCount > 0) && (
 
 
+                <WaitScreen tasks={currentGame.tasks} home={() => handlePressHome()} />
+
+
+              )}
             </View>
-          </ScrollView>
-        </KeyboardAvoidingView>
-      )}
-      {gameOn && (
-        <View style={styles.container2}>
-          <View style={styles.gamesWrapper}>
-            <View style={styles.topLine2}>
-              <TouchableOpacity onPress={handlePressHome}>
-                <View style={styles.home2}>
-                  <Ionicons name="home" size={theme.sizes.small} color={theme.colors.white} />
-                </View>
-              </TouchableOpacity>
-            </View>
-
-            {!passing && (turnCount === 0) && (
-              <>
-                <Text style={styles.GameText}>המשחק:</Text>
-                <Text style={styles.GameText}>"{currentGame.title}"</Text>
-                <Text style={styles.GameText}>מוכן</Text>
-                <TouchableOpacity style={styles.playButton2} onPress={handleStartPlaying}>
-                  <View style={styles.playButtonText}>
-                    <Text style={styles.playButtonTextBox}>התחל</Text>
-                    <Text style={styles.playButtonTextBox}>משחק</Text>
-                  </View>
-                </TouchableOpacity>
-              </>
-            )}
-
-            {passing && (turnCount > 0) && (
-
-
-              <WaitScreen tasks={currentGame.tasks} home={() => handlePressHome()} />
-
-
-            )}
-          </View>
-        </View >
+          </View >
+        </ImageBackground>
 
 
 
@@ -366,24 +377,46 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    resizeMode: 'cover',
+    tintColor: '#fffdefCC',
+    // backgroundColor: theme.colors.backgroundColor,
+    zIndex: -1,
+    // opacity: 0.5
+
+  },
   container: {
     flex: 1,
-    backgroundColor: theme.colors.backgroundColor,
+    // backgroundColor: theme.colors.backgroundColor,
+    opacity: 1,
+    backgroundColor: 'transparent',
 
+  },
+  scrollContent: {
+    flexGrow: 1,
   },
   gamesWrapper: {
     padding: 80,
     paddingHorizontal: 20,
   },
   sectionTitle: {
-    fontSize: theme.fontSizes.header,
+    fontSize: theme.fontSizes.xlarge,
     fontWeight: "bold",
     width: "80%",
     alignSelf: "flex-end",
     textAlign: 'right',
     color: theme.colors.primaryBlack,
+    textShadowColor: "rgba(255, 255, 200, 0.89)", // glow color
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 10, // blur amount
+    // boxShadow: '0px 0px 9px 7px rgba(219,219,219,1)'
+
+
   },
-  games: {},
+  games: {
+    // boxShadow: '0px 0px 9px 7px rgba(219,219,219,1)'
+  },
 
   plus: {
     backgroundColor: theme.colors.buttonBackgroundColor,
@@ -405,6 +438,7 @@ const styles = StyleSheet.create({
     borderColor: theme.colors.borderGray,
     borderWidth: 1,
     marginTop: 10,
+    boxShadow: '0px 0px 9px 7px rgba(219,219,219,1)'
   },
   addIconWrapper: {
     justifyContent: 'center',
@@ -453,7 +487,7 @@ const styles = StyleSheet.create({
 
   container2: {
     flex: 1,
-    backgroundColor: theme.colors.backgroundColor,
+    backgroundColor: 'transparent',
     justifyContent: 'space-between',
     // rowGap: 20,
 

@@ -31,7 +31,7 @@ export default function WaitScreen(props) {
                 setIsPlaying(true);
             } catch (error) {
                 // console.log('Error playing sound', error);
-                console.log('music has ended');
+                console.log('party groove has ended');
             }
         };
 
@@ -56,14 +56,16 @@ export default function WaitScreen(props) {
                 await soundTadaObject.loadAsync(require('../assets/tada1.mp3'));
 
                 await soundTadaObject.playAsync();
+                setIsPlaying(true);
 
             } catch (error) {
                 // console.log('Error playing sound', error);
-                console.log('music has ended');
+                console.log('tada could not be played');
             }
         };
 
         if ((timeLeft === 0) && (dispFinalScreen)) {
+            // setIsPlaying(false);
             playTada();
         } else {
             soundTadaObject.stopAsync();
@@ -270,7 +272,7 @@ const styles = StyleSheet.create({
         width: 180,
         height: 180,
         resizeMode: 'contain',
-        zIndex: -10,
+        // zIndex: -10,
     },
 
 });

@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
         borderColor: theme.colors.borderGray,
         borderWidth: 1,
         marginTop: 20,
+        boxShadow: '0px 0px 9px 7px rgba(219,219,219,1)'
     },
     gameText: {
         flexWrap: 'wrap-reverse',
