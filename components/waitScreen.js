@@ -7,6 +7,7 @@ import GiftIcon from './presanimation';
 import openGift from '../assets/opengift.png'
 import ConfettiCannon from 'react-native-confetti-cannon';
 import AnimatedTextEntry from './animatedtextentry';
+import { theme } from './theme';
 
 
 
@@ -26,7 +27,6 @@ export default function WaitScreen(props) {
         const playSound = async () => {
             try {
                 await soundObject.loadAsync(require('../assets/partyGroove.mp3'));
-                // await soundObject.setIsLoopingAsync(true);
                 await soundObject.playAsync();
                 setIsPlaying(true);
             } catch (error) {
@@ -54,7 +54,7 @@ export default function WaitScreen(props) {
         const playTada = async () => {
             try {
                 await soundTadaObject.loadAsync(require('../assets/tada1.mp3'));
-                // await soundTadaObject.setIsLoopingAsync(true);
+
                 await soundTadaObject.playAsync();
 
             } catch (error) {
@@ -138,8 +138,7 @@ export default function WaitScreen(props) {
                 <View style={styles.container4} >
                     <Text style={styles.pass}>העבירו את החבילה</Text>
                     <GiftIcon></GiftIcon>
-                    {/* add animation */}
-                    {/* <Text style={styles.num}>{timeLeft}</Text> */}
+
                 </View>
             </>)
             }
@@ -148,23 +147,6 @@ export default function WaitScreen(props) {
                 <View style={styles.container3}>
 
                     <AnimatedTextEntry text={props.tasks[indexToDisplay]} />
-
-                    {/* <Animated.View style={[
-                    styles.taskContainer,
-                    {
-                        transform: [
-                            {
-                                translateX: animValue.interpolate({
-                                    inputRange: [0, 1],
-                                    outputRange: [500, 0],
-                                }),
-                            },
-                        ],
-                    },
-                ]}> */}
-
-                    {/* <Text multiline={true} style={styles.task}>{props.tasks[indexToDisplay]}</Text> */}
-                    {/* </Animated.View> */}
 
 
                     <View style={styles.line2}>
@@ -183,7 +165,7 @@ export default function WaitScreen(props) {
             {(timeLeft === 0) && (dispFinalScreen) && (<>
                 <View style={styles.containerWinMsg}>
                     <Text multiline={true} style={styles.win}>כל הכבוד, ניצחתם!!!</Text>
-                    {/* <View style={height = 5}></View> */}
+
 
                     <Image source={openGift} style={styles.gift} />
 
@@ -191,14 +173,7 @@ export default function WaitScreen(props) {
                         <Text style={styles.cont}>סיום</Text>
                     </TouchableOpacity>
                     <ConfettiCannon count={300} origin={{ x: 100, y: -200 }} explosionSpeed={200} fallSpeed={6000} />
-                    {/* <Confetti
-                        width={width}
-                        height={height}
-                        run={true}
-                        numberOfPieces={300}
-                        recycle={false}
-                    /> */}
-                    {/* <Confetti count={250} type="fall" /> */}
+
                 </View>
             </>)}
         </View>
@@ -210,7 +185,6 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     container4: {
-        // flex: 0.5,
         height: '80%',
         display: 'flex',
         flexDirection: 'column',
@@ -221,17 +195,13 @@ const styles = StyleSheet.create({
     },
     pass: {
         textAlign: 'center',
-        fontSize: 30,
+        fontSize: theme.fontSizes.xlarge,
         fontWeight: 600,
     },
-    // num: {
-    //     textAlign: 'center',
-    //     fontSize: 50,
-    //     fontWeight: 600,
-    // },
+
 
     container3: {
-        // flex: 0.5,
+
         height: '89%',
         display: 'flex',
         flexDirection: 'column',
@@ -239,7 +209,7 @@ const styles = StyleSheet.create({
         alignContent: 'space-between',
     },
     containerWinMsg: {
-        // flex: 0.5,
+
         height: '93%',
         display: 'flex',
         flexDirection: 'column',
@@ -247,21 +217,20 @@ const styles = StyleSheet.create({
         alignContent: 'space-between',
         marginTop: -20,
         position: 'relative',
-        // flex: 1,       // bottom: -10
+
     },
     task: {
         flex: 0.5,
         textAlign: 'center',
-        fontSize: 30,
+        fontSize: theme.fontSizes.xlarge,
         fontWeight: 600,
 
     },
     win: {
-        // flex: 0.5,
         position: 'relative',
         bottom: 20,
         textAlign: 'center',
-        fontSize: 30,
+        fontSize: theme.fontSizes.xlarge,
         fontWeight: 600,
         zIndex: 100,
         marginBottom: 10,
@@ -273,10 +242,10 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     prevNext: {
-        fontSize: 14,
+        fontSize: theme.fontSizes.small,
         padding: 3,
         marginHorizontal: 10,
-        backgroundColor: '#f5dcdc',
+        backgroundColor: theme.colors.lightGray,
         borderRadius: 7,
         textAlign: 'center',
         width: 80,
@@ -284,20 +253,17 @@ const styles = StyleSheet.create({
         opacity: 0.6,
     },
     cont: {
-        fontSize: 24,
+        fontSize: theme.fontSizes.header,
         padding: 5,
-        backgroundColor: '#fc3535',
-        color: 'white',
+        backgroundColor: theme.colors.buttonBackgroundColor,
+        color: theme.colors.white,
         borderRadius: 7,
         textAlign: 'center',
         width: 100,
         overflow: 'hidden',
         alignSelf: 'center',
-
-        // flex: 1,
     },
     gift: {
-
         marginTop: 0,
         marginBottom: 60,
         alignSelf: 'center',

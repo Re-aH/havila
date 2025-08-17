@@ -9,6 +9,7 @@ export const theme = {
         primaryBlack: '#0C0C0C',
     },
     fontSizes: {
+        small: 14,
         large: 20,
         header: 24,
         xlarge: 32,

@@ -24,9 +24,9 @@ export default function GameTitle(props) {
 const styles = StyleSheet.create({
     game: {
         padding: 15,
-        backgroundColor: "#f1f1f1",
+        backgroundColor: theme.colors.lightGray,
         borderRadius: 10,
-        borderColor: "#C0C0C0",
+        borderColor: theme.colors.borderGray,
         borderWidth: 1,
         marginTop: 20,
     },
@@ -43,11 +43,11 @@ const styles = StyleSheet.create({
         bottom: 11,
         alignSelf: 'center',
         borderWidth: StyleSheet.hairlineWidth,
-        borderColor: "#C0C0C0",
+        borderColor: theme.colors.borderGray,
     },
     deleteButton: {
         paddingTop: 1,
-        color: 'white',
+        color: theme.colors.white,
         textAlign: 'center',
     }
 

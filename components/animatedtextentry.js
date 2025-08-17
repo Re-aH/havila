@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Animated, Text, StyleSheet } from 'react-native';
 import { Audio } from 'expo-av'
+import { theme } from './theme';
 
 const AnimatedTextEntry = ({ text }) => {
     const translateX = useRef(new Animated.Value(300)).current;
@@ -88,7 +89,7 @@ const styles = StyleSheet.create({
     text: {
         flex: 1,
         flexWrap: 'wrap',
-        fontSize: 30,
+        fontSize: theme.fontSizes.xlarge,
         fontWeight: 600,
         textAlign: 'center',
 

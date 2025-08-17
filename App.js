@@ -53,16 +53,27 @@ export default function App() {
 
       let newTasks = currentGame.tasks;
       newTasks = newTasks.filter((item, i) => i !== index)
-      setCurrentGame({ ...currentGame, tasks: newTasks });
+      const updatedCurrentGame = { ...currentGame, tasks: newTasks };
+      setCurrentGame(updatedCurrentGame);
+
+      // Update games array and save to storage
+      let newGames = [...games];
+      const gameIndex = newGames.findIndex(g => g.id === currentGame.id);
+      if (gameIndex !== -1) {
+        newGames[gameIndex] = updatedCurrentGame;
+        setGames(newGames);
+        saveGamesToStorage(newGames);
+      }
       // console.log(newTasks, currentGame, index);
     }
   };
 
   const handleGameTitleChange = (text) => {
-    setCurrentGame({
+    const updatedCurrentGame = {
       ...currentGame,
       title: text
-    });
+    };
+    setCurrentGame(updatedCurrentGame);
 
     //find the index of the game with this id
     let index = games.findIndex(g => g.id === currentGame.id)
@@ -70,10 +81,10 @@ export default function App() {
 
     //replaces this game in games array
     let newGames = [...games];
-    newGames.splice(index, 1, currentGame);
+    newGames.splice(index, 1, updatedCurrentGame);
     // console.log(newGames);
     setGames(newGames);
-    saveGamesToStorage(games);
+    saveGamesToStorage(newGames);
 
   };
 
@@ -83,11 +94,10 @@ export default function App() {
     // console.log(id);
     if (games) {
 
-      let newGames = games;
-      newGames = newGames.filter((g) => g.id !== id)
+      let newGames = games.filter((g) => g.id !== id);
       setGames(newGames)
       // console.log(newGames);
-      saveGamesToStorage(games);
+      saveGamesToStorage(newGames);
     }
 
 
@@ -101,7 +111,17 @@ export default function App() {
 
       let newTasks = currentGame.tasks;
       newTasks[index] = text;
-      setCurrentGame({ ...currentGame, tasks: newTasks });
+      const updatedCurrentGame = { ...currentGame, tasks: newTasks };
+      setCurrentGame(updatedCurrentGame);
+
+      // Update games array and save to storage
+      let newGames = [...games];
+      const gameIndex = newGames.findIndex(g => g.id === currentGame.id);
+      if (gameIndex !== -1) {
+        newGames[gameIndex] = updatedCurrentGame;
+        setGames(newGames);
+        saveGamesToStorage(newGames);
+      }
       // console.log(newTasks, currentGame);
     }
   }
@@ -111,10 +131,20 @@ export default function App() {
 
   const handleAddItem = () => {
     Keyboard.dismiss();
-    setCurrentGame({
+    const updatedCurrentGame = {
       ...currentGame,
       tasks: [...currentGame.tasks, item]
-    });
+    };
+    setCurrentGame(updatedCurrentGame);
+
+    // Update games array and save to storage
+    let newGames = [...games];
+    const gameIndex = newGames.findIndex(g => g.id === currentGame.id);
+    if (gameIndex !== -1) {
+      newGames[gameIndex] = updatedCurrentGame;
+      setGames(newGames);
+      saveGamesToStorage(newGames);
+    }
     setItem(null);
   };
 
@@ -133,8 +163,9 @@ export default function App() {
     }
 
     setCurrentGame(newGame);
-    setGames([...games, newGame])
-    saveGamesToStorage(games);
+    const updatedGames = [...games, newGame];
+    setGames(updatedGames);
+    saveGamesToStorage(updatedGames);
     setEditing(true);
   };
 
@@ -148,7 +179,7 @@ export default function App() {
     newGames.splice(index, 1, currentGame);
     // console.log(newGames);
     setGames(newGames);
-    saveGamesToStorage(games);
+    saveGamesToStorage(newGames);
     setCurrentGame(null);
     setEditing(false);
 
@@ -178,7 +209,7 @@ export default function App() {
     newGames.splice(index, 1, currentGame);
     // console.log(newGames);
     setGames(newGames);
-    saveGamesToStorage(games);
+    saveGamesToStorage(newGames);
     setEditing(false);
     setGameOn(true)
   };
@@ -222,7 +253,7 @@ export default function App() {
                   <Text>משחק חדש</Text>
                   <TouchableOpacity onPress={handleAddGame}>
                     <View style={styles.plusWrapper}>
-                      <Ionicons name="add-circle" size={24} color="#fc3535" />
+                      <Ionicons name="add-circle" size={theme.sizes.medium} color={theme.colors.buttonBackgroundColor} />
                     </View>
                   </TouchableOpacity>
                 </View>
@@ -250,7 +281,7 @@ export default function App() {
                 />
                 <TouchableOpacity onPress={handlePressHome}>
                   <View style={styles.home}>
-                    <Ionicons name="home" size={18} color="white" />
+                    <Ionicons name="home" size={theme.sizes.small} color={theme.colors.white} />
                   </View>
                 </TouchableOpacity>
               </View>
@@ -271,7 +302,7 @@ export default function App() {
                     />
                     <TouchableOpacity onPress={handleAddItem}>
                       <View style={styles.addIconWrapper}>
-                        <Ionicons name="add-circle" size={24} color={theme.colors.buttonBackgroundColor} />
+                        <Ionicons name="add-circle" size={theme.sizes.medium} color={theme.colors.buttonBackgroundColor} />
                       </View>
                     </TouchableOpacity>
                   </View>
@@ -295,7 +326,7 @@ export default function App() {
             <View style={styles.topLine2}>
               <TouchableOpacity onPress={handlePressHome}>
                 <View style={styles.home2}>
-                  <Ionicons name="home" size={18} color="white" />
+                  <Ionicons name="home" size={theme.sizes.small} color={theme.colors.white} />
                 </View>
               </TouchableOpacity>
             </View>
