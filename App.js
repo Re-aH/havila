@@ -11,7 +11,13 @@ import openBox from './assets/10a11053-01f8-4b89-a579-d445a9114243.jpg';
 import openBox2 from './assets/c4a625f4-d5c8-4d4f-b482-773eb7af0e6b.jpg';
 import openBox3 from './assets/imageredback.jpg';
 
+import { I18nManager } from "react-native";
 
+// Disable automatic RTL flipping
+if (I18nManager.isRTL) {
+  I18nManager.allowRTL(false);
+  I18nManager.forceRTL(false);
+}
 
 
 
@@ -331,39 +337,41 @@ export default function App() {
       )}
       {gameOn && (
         <ImageBackground source={openBox3} style={styles.background} resizeMode="cover">
-          <View style={styles.container2}>
-            <View style={styles.gamesWrapper}>
-              <View style={styles.topLine2}>
-                <TouchableOpacity onPress={handlePressHome}>
-                  <View style={styles.home2}>
-                    <Ionicons name="home" size={theme.sizes.small} color={theme.colors.white} />
-                  </View>
-                </TouchableOpacity>
-              </View>
-
-              {!passing && (turnCount === 0) && (
-                <>
-                  <Text style={styles.GameText}>המשחק:</Text>
-                  <Text style={styles.GameText}>"{currentGame.title}"</Text>
-                  <Text style={styles.GameText}>מוכן</Text>
-                  <TouchableOpacity style={styles.playButton2} onPress={handleStartPlaying}>
-                    <View style={styles.playButtonText}>
-                      <Text style={styles.playButtonTextBox}>התחל</Text>
-                      <Text style={styles.playButtonTextBox}>משחק</Text>
+          <ScrollView>
+            <View style={styles.container2}>
+              <View style={styles.gamesWrapper}>
+                <View style={styles.topLine2}>
+                  <TouchableOpacity onPress={handlePressHome}>
+                    <View style={styles.home2}>
+                      <Ionicons name="home" size={theme.sizes.small} color={theme.colors.white} />
                     </View>
                   </TouchableOpacity>
-                </>
-              )}
+                </View>
 
-              {passing && (turnCount > 0) && (
+                {!passing && (turnCount === 0) && (
+                  <>
+                    <Text style={styles.GameText}>המשחק:</Text>
+                    <Text style={styles.GameText}>"{currentGame.title}"</Text>
+                    <Text style={styles.GameText}>מוכן</Text>
+                    <TouchableOpacity style={styles.playButton2} onPress={handleStartPlaying}>
+                      <View style={styles.playButtonText}>
+                        <Text style={styles.playButtonTextBox}>התחל</Text>
+                        <Text style={styles.playButtonTextBox}>משחק</Text>
+                      </View>
+                    </TouchableOpacity>
+                  </>
+                )}
+
+                {passing && (turnCount > 0) && (
 
 
-                <WaitScreen tasks={currentGame.tasks} home={() => handlePressHome()} />
+                  <WaitScreen tasks={currentGame.tasks} home={() => handlePressHome()} />
 
 
-              )}
-            </View>
-          </View >
+                )}
+              </View>
+            </View >
+          </ScrollView>
         </ImageBackground>
 
 

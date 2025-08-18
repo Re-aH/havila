@@ -1,6 +1,6 @@
 
 
-import { TouchableOpacity, StyleSheet, View, Text, Image } from 'react-native';
+import { TouchableOpacity, StyleSheet, View, Text, Image, Dimensions } from 'react-native';
 import { useState, useEffect } from 'react';
 // import { Audio } from 'expo-av';
 import { useAudioPlayer } from 'expo-audio';
@@ -12,7 +12,7 @@ import { theme } from './theme';
 
 const partyGroove = require('../assets/partyGroove.mp3');
 const tada = require('../assets/tada1.mp3');
-
+const height = Dimensions.get('window').height;
 export default function WaitScreen(props) {
     //to be later passed in as props
     let starterT = 7
@@ -62,7 +62,7 @@ export default function WaitScreen(props) {
 
 
         if (timeLeft === 0 && dispFinalScreen) {
-            console.log('hihihi');
+            // console.log('hihihi');
             player1.pause()
             player2.seekTo(0);
             player2.play();
@@ -149,21 +149,22 @@ export default function WaitScreen(props) {
             {(timeLeft === 0) && (!dispFinalScreen) && (<>
 
                 <View style={styles.container3}>
-
-                    <AnimatedTextEntry text={props.tasks[indexToDisplay]} />
-
-
-                    <View style={styles.line2}>
-                        <TouchableOpacity onPress={handleNext}>
-                            <Text style={styles.prevNext}>דלג</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={handlePrev} >
-                            <Text style={styles.prevNext}>חזור</Text>
+                    <View style={{ flex: 3 }}>
+                        <AnimatedTextEntry text={props.tasks[indexToDisplay]} />
+                    </View>
+                    <View style={{ flex: 1, justifyContent: "space-between" }}>
+                        <View style={styles.line2}>
+                            <TouchableOpacity onPress={handleNext}>
+                                <Text style={styles.prevNext}>דלג</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={handlePrev} >
+                                <Text style={styles.prevNext}>חזור</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <TouchableOpacity onPress={handleCont}>
+                            <Text style={styles.cont}>המשך</Text>
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity onPress={handleCont}>
-                        <Text style={styles.cont}>המשך</Text>
-                    </TouchableOpacity>
                 </View>
             </>)}
             {(timeLeft === 0) && (dispFinalScreen) && (<>
@@ -195,6 +196,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-around',
         alignContent: 'space-around',
+        // marginBottom: 65,
 
 
     },
@@ -203,12 +205,13 @@ const styles = StyleSheet.create({
         fontSize: theme.fontSizes.xlarge,
         fontWeight: 600,
         backgroundColor: 'rgba(255, 254, 202, 0.5)',
+        marginBottom: theme.sizes.small,
     },
 
 
     container3: {
 
-        height: '89%',
+        height: height * 0.72,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
@@ -216,7 +219,8 @@ const styles = StyleSheet.create({
     },
     containerWinMsg: {
         // backgroundColor: 'red',
-        height: '90%',
+        maxHeight: height * 0.9, // never taller than screen
+        width: '90%',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-around',
@@ -241,7 +245,7 @@ const styles = StyleSheet.create({
         fontSize: theme.fontSizes.xlarge,
         fontWeight: 600,
         zIndex: 100,
-        marginBottom: 10,
+        marginBottom: theme.sizes.small,
         backgroundColor: 'rgba(255, 254, 202, 0.5)',
     },
     line2: {
@@ -249,19 +253,21 @@ const styles = StyleSheet.create({
         flex: 0.25,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginLeft: 10,
-        marginRight: 10,
+        marginLeft: theme.sizes.small,
+        marginRight: theme.sizes.small,
     },
     prevNext: {
         fontSize: theme.fontSizes.small,
-        padding: 3,
-        marginHorizontal: 10,
+        padding: 4,
+        marginHorizontal: theme.sizes.small,
         backgroundColor: theme.colors.lightGray,
         borderRadius: 7,
         textAlign: 'center',
         width: 80,
         overflow: 'hidden',
         opacity: 0.6,
+        lineHeight: theme.fontSizes.small * 1.4, // ensures text fits well
+        minHeight: 36,                // guarantees enough height
     },
     cont: {
         fontSize: theme.fontSizes.header,
@@ -276,10 +282,11 @@ const styles = StyleSheet.create({
     },
     gift: {
         alignSelf: 'center',
-        width: '65%',
-        height: 250,
+        // width: 200,
+        height: height * 0.33,
         resizeMode: 'contain',
-        marginBottom: 30,
+        marginBottom: height * 0.15,
+        marginTop: height * 0.02,
     },
 
 });

@@ -18,7 +18,7 @@ export const theme = {
         small: 18,
         medium: 24,
         large: 32,
-        xlarge: 80,
+        xlarge: 96,
     },
     gap: {
         small: 8,
