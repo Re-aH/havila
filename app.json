@@ -17,7 +17,10 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.reameir.havila",
-      "buildNumber": "3"
+      "buildNumber": "3",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -25,7 +28,11 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.reameir.havila",
-      "versionCode": 8
+      "versionCode": 8,
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ]
     },
     "web": {
       "favicon": "./assets/gifticon.png"
